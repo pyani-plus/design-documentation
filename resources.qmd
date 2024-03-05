@@ -1,5 +1,9 @@
 # Resources { .unnumbered }
 
+## `All Contributors`
+
+- All Contributors documentation: [https://allcontributors.org/docs/en/overview](https://allcontributors.org/docs/en/overview)
+
 ## `GitHub`
 
 - Creating a GitHub issue: [https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
