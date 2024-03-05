@@ -1,0 +1,5 @@
+# SQLite3
+
+This chapter describes our general approach to using `sqlite3` for `pyani-plus` application data storage.
+
+- [`aiosqlite`](https://github.com/omnilib/aiosqlite): library for asynchronous access to `sqlite3`

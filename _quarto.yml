@@ -29,6 +29,7 @@ book:
       chapters:
       - contributing.qmd
       - recording-contributions.qmd
+    - part: part-jobs.qmd
     - part: part-anim.qmd
       chapters:
         - anim-method.qmd

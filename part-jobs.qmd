@@ -1,0 +1,3 @@
+# Job Distribution {#sec-anim}
+
+This section of the documentation contains material concerning third-party job distribution, e.g. using SGE/SLURM/Snakemake/`asyncio`.
