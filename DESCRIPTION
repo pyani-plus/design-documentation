@@ -1,0 +1,20 @@
+Package: pyani-plus_design_documentation
+Title: `pyani-plus` Design Documentation
+Version: 0.1
+Authors@R: c(
+    person("Leighton", "Pritchard", , "leighton.pritchard@strath.ac.uk", role = c("aut", "cre")),
+  )
+URL: https://github.com/pyani-plus/design-documentation
+Depends: 
+    R (>= 3.1.0)
+Imports:
+    tidyverse (>= 2.0.0),
+    ggplot2,
+    flextable,
+    kableExtra
+Suggests:
+    knitr,
+    sessioninfo
+Remotes: tidyverse/dplyr
+Encoding: UTF-8
+License: CC NC ND 4.0

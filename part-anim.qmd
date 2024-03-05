@@ -1,0 +1,3 @@
+# ANIm {#sec-anim}
+
+This section of the documentation includes material specifically relevant to calculation and execution of the ANIm method.

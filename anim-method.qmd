@@ -1,0 +1,3 @@
+# The ANIm Methodology
+
+This chapter describes how ANIm works.
