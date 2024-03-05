@@ -1,0 +1,27 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "widdowquinn",
+      "name": "Leighton Pritchard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63981?v=4",
+      "profile": "https://www.strath.ac.uk/staff/pritchardleightondr/",
+      "contributions": [
+        "infra",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "design-documentation",
+  "projectOwner": "pyani-plus"
+}
