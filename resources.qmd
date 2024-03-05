@@ -1,0 +1,22 @@
+# Resources { .unnumbered }
+
+## `GitHub`
+
+- Creating a GitHub issue: [https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
+- Creating a pull request: [https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
+- GitHub Actions documentation: [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
+- Repository forks: [https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+
+## `Quarto`
+
+- The Quarto project: [https://quarto.org/](https://quarto.org/)
+- The Quarto guide: [https://quarto.org/docs/guide/](https://quarto.org/docs/guide/)
+- Publishing Quarto on GitHub pages: [https://quarto.org/docs/publishing/github-pages.html](https://quarto.org/docs/publishing/github-pages.html)
+
+## `R`/`RStudio`
+
+- `RStudio` Desktop: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+## `Visual Studio Code`
+
+- `Visual Studio Code`: [https://code.visualstudio.com/](https://code.visualstudio.com/)

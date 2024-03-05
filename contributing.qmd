@@ -1,0 +1,139 @@
+# Contributing
+
+This documentation is written and maintained in [Quarto](resources.qmd#quarto). A live version of the current documentation is available [at GitHub](https://pyani-plus.github.io/design-documentation/). The live version of the documentation is rendered from the current `main` branch at [https://github.com/pyani-plus/design-documentation](https://github.com/pyani-plus/design-documentation), using [GitHub Actions](https://docs.github.com/en/actions).
+
+::: { .callout-note }
+`pyani-plus` is an open source project and we welcome contributions using standard good development practice. This page outlines our local flavour of what we think of as "good practice."
+:::
+
+::: { .callout-important }
+Please keep all documentation and examples, so far as is possible, in Quarto to minimise the effort required for maintanance.
+:::
+
+::: { .callout-tip }
+If you are already comfortable with GitHub and Quarto, you might want to skip straight to the [example workflow](#example-workflow).
+:::
+
+## Obtaining the current documentation
+
+To get a local copy of the documentation on your own machine, [clone the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to your own machine. For example, at the command-line you might issue:
+
+```bash
+git clone git@github.com:pyani-plus/design-documentation.git
+```
+
+which will create a new directory called `design-documentation` in the current location.
+
+### Project content layout
+
+As is standard for Quarto projects, the top level - the same one with the `Rproj` file - contains a set of `.qmd` files - one for each page of the documentation. The ordering of these pages is determined by the `chapters` section in the `_quarto.yml` configuration file, not by filename.
+
+::: { .callout-caution }
+Please keep all document pages in the top level of this repository.
+:::
+
+The `assets` subdirectory is used to hold additional, non-`.qmd` files, such as images, each datatype contained within their own nested subfolder.
+
+```bash
+design-documentation
+  |
+  assets
+    |
+    data
+    |
+    images
+    | 
+    papers
+```
+
+- `data` - contains datafiles (e.g. example third-party program output).
+- `images` - contains image files
+- `papers` - contains references and other material it's useful to have accompany this documentation
+
+::: { .callout-caution }
+Please organise all asset files under the `assets` subdirectory as outlined above
+:::
+
+### Project styling and configuration
+
+Styling and configuration is controlled mainly by two YAML files: `_quarto.yml` and `_variables.yml`.
+
+- `_quarto.yml` - describes headers, footers, titles, page ordering, etc.
+- `_variables.yml` - describes variables that can be reused throughout the document
+
+::: { .callout-caution }
+Please use the `_variables.yml` file where appropriate to define variables that may be reused at many points in the document, such as contact emails, paths repository features, and so on.
+:::
+
+## Editing the documentation
+
+::: { .callout-important }
+**If you are working in the `pyani-plus/` organisation** the first action for editing or creating a new section should be to create a new branch with, e.g. `git checkout -b issue_1`.
+
+**If you are not working in the `pyani-plus` organisation** you should be working in your own [fork of the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
+:::
+
+::: { .callout-caution }
+Before editing the documentation, please be sure that you are not working in the `main` branch. The `main` branch is **locked** for `push` actions, and attempts to push direct to `main` will fail. Please see the section on [submitting changes](#submitting-changes) below.
+:::
+
+This documentation is written in [Quarto](resources.qmd#quarto) and can, technically, be edited in any standard code editor (e.g. [VS Code](resources.qmd#visual-studio-code), Emacs or Vim). However, it may be most convenient to edit the project using [`RStudio` Desktop](https://quarto.org/docs/tools/rstudio.html), which has native Quarto and `git`/GitHub integration.
+
+The repository is an [`RStudio` project](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects), which is defined in the `design-docs.Rproj` file (`.Rproj` files are the definition files for these projects). To open the project, either open the `.Rproj` file from within `RStudio` Desktop, or double-click the file in your file manager window. The project should open in `RStudio` Desktop, if it is installed.
+
+## Making suggestions
+
+If you have spotted an error, or would like to suggest a change to the documentation, and cannot or do not want to make changes to the documentation yourself - or cannot make those changes immediately - please [create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) on the repository.
+
+- [Create an issue for this documentation]({{< var github.issues >}})
+
+## Example Workflow
+
+This example workflow describes the actions required for a developer in the `pyani-plus-dev` team.
+
+### Clone the repository to your local machine
+
+```bash
+git clone git@github.com:pyani-plus/design-documentation.git
+```
+
+### Create a new branch
+
+Use a short string that is informative for your changes, e.g.
+
+```bash
+git checkout -b issue_1
+```
+
+### Make your edits
+
+Update the documentation as you need to, checking that the documentation still builds by rendering it locally on your machine.
+
+### Rebase your local changes against `main`
+
+In case changes have happened in the `main` branch, you should [_rebase_ your branch](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) against the current state of `main`.
+
+```bash
+git fetch
+git checkout my_branch
+git rebase origin/main
+```
+
+This replays your local changes on top of the current state of `main` on GitHub. Once this is done, please rerender to check that the documentation still builds.
+
+### Push the changes
+
+Push the changes you made to the repository, e.g.
+
+```bash
+git push origin
+```
+
+### Make a pull request
+
+Make a pull request against `main` from your new branch, at GitHub.
+
+### Participate in review
+
+Making the pull request will prompt a code review. The changes might be accepted immediately without modification, after a delay, be modified, or require discussion in the pull request chat.
+

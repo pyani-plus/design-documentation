@@ -25,9 +25,10 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - contributing.qmd
     - summary.qmd
 #    - glossary.qmd
-#    - resources.qmd
+    - resources.qmd
     - references.qmd
 
 bibliography: references.bib

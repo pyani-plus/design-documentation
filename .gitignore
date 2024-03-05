@@ -10,3 +10,7 @@
 # Ignore compiled book
 _book
 _freeze
+/contributing_files
+
+# Ignore macOS admin files
+.DS_Store

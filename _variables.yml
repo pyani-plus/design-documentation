@@ -6,4 +6,4 @@ admin:
 github:
   repo: "https://github.com/organizations/pyani-plus/design-documentation"
   issues: "https://github.com/organizations/pyani-plus/design-documentation/issues"
-  issues: "https://github.com/organizations/pyani-plus/design-documentation/pulls"
+  pulls: "https://github.com/organizations/pyani-plus/design-documentation/pulls"
