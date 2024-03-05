@@ -30,12 +30,23 @@
     ]
   },
   {
+    "objectID": "part-dev.html",
+    "href": "part-dev.html",
+    "title": "Development",
+    "section": "",
+    "text": "This section of the documentation describes style and good practices choices for the repository. Please consult this if you are a project developer, or would like to make a contribution.",
+    "crumbs": [
+      "Development"
+    ]
+  },
+  {
     "objectID": "contributing.html",
     "href": "contributing.html",
     "title": "2  Contributing",
     "section": "",
     "text": "2.1 Obtaining the current documentation\nTo get a local copy of the documentation on your own machine, clone the repository to your own machine. For example, at the command-line you might issue:\nwhich will create a new directory called design-documentation in the current location.",
     "crumbs": [
+      "Development",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Contributing</span>"
     ]
   },
@@ -46,6 +57,7 @@
     "section": "",
     "text": "git clone git@github.com:pyani-plus/design-documentation.git\n\n\n2.1.1 Project content layout\nAs is standard for Quarto projects, the top level - the same one with the Rproj file - contains a set of .qmd files - one for each page of the documentation. The ordering of these pages is determined by the chapters section in the _quarto.yml configuration file, not by filename.\n\n\n\n\n\n\nCaution\n\n\n\nPlease keep all document pages in the top level of this repository.\n\n\nThe assets subdirectory is used to hold additional, non-.qmd files, such as images, each datatype contained within their own nested subfolder.\ndesign-documentation\n  |\n  assets\n    |\n    data\n    |\n    images\n    | \n    papers\n\ndata - contains datafiles (e.g. example third-party program output).\nimages - contains image files\npapers - contains references and other material it’s useful to have accompany this documentation\n\n\n\n\n\n\n\nCaution\n\n\n\nPlease organise all asset files under the assets subdirectory as outlined above\n\n\n\n\n2.1.2 Project styling and configuration\nStyling and configuration is controlled mainly by two YAML files: _quarto.yml and _variables.yml.\n\n_quarto.yml - describes headers, footers, titles, page ordering, etc.\n_variables.yml - describes variables that can be reused throughout the document\n\n\n\n\n\n\n\nCaution\n\n\n\nPlease use the _variables.yml file where appropriate to define variables that may be reused at many points in the document, such as contact emails, paths repository features, and so on.",
     "crumbs": [
+      "Development",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Contributing</span>"
     ]
   },
@@ -56,6 +68,7 @@
     "section": "2.2 Editing the documentation",
     "text": "2.2 Editing the documentation\n\n\n\n\n\n\nImportant\n\n\n\nIf you are working in the pyani-plus/ organisation the first action for editing or creating a new section should be to create a new branch with, e.g. git checkout -b issue_1.\nIf you are not working in the pyani-plus organisation you should be working in your own fork of the repository.\n\n\n\n\n\n\n\n\nCaution\n\n\n\nBefore editing the documentation, please be sure that you are not working in the main branch. The main branch is locked for push actions, and attempts to push direct to main will fail. Please see the section on submitting changes below.\n\n\nThis documentation is written in Quarto and can, technically, be edited in any standard code editor (e.g. VS Code, Emacs or Vim). However, it may be most convenient to edit the project using RStudio Desktop, which has native Quarto and git/GitHub integration.\nThe repository is an RStudio project, which is defined in the design-docs.Rproj file (.Rproj files are the definition files for these projects). To open the project, either open the .Rproj file from within RStudio Desktop, or double-click the file in your file manager window. The project should open in RStudio Desktop, if it is installed.",
     "crumbs": [
+      "Development",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Contributing</span>"
     ]
   },
@@ -66,6 +79,7 @@
     "section": "2.3 Making suggestions",
     "text": "2.3 Making suggestions\nIf you have spotted an error, or would like to suggest a change to the documentation, and cannot or do not want to make changes to the documentation yourself - or cannot make those changes immediately - please create an issue on the repository.\n\nCreate an issue for this documentation",
     "crumbs": [
+      "Development",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Contributing</span>"
     ]
   },
@@ -76,17 +90,41 @@
     "section": "2.4 Example Workflow",
     "text": "2.4 Example Workflow\nThis example workflow describes the actions required for a developer in the pyani-plus-dev team.\n\n2.4.1 Clone the repository to your local machine\ngit clone git@github.com:pyani-plus/design-documentation.git\n\n\n2.4.2 Create a new branch\nUse a short string that is informative for your changes, e.g.\ngit checkout -b issue_1\n\n\n2.4.3 Make your edits\nUpdate the documentation as you need to, checking that the documentation still builds by rendering it locally on your machine.\n\n\n2.4.4 Rebase your local changes against main\nIn case changes have happened in the main branch, you should rebase your branch against the current state of main.\ngit fetch\ngit checkout my_branch\ngit rebase origin/main\nThis replays your local changes on top of the current state of main on GitHub. Once this is done, please rerender to check that the documentation still builds.\n\n\n2.4.5 Push the changes\nPush the changes you made to the repository, e.g.\ngit push origin\n\n\n2.4.6 Make a pull request\nMake a pull request against main from your new branch, at GitHub.\n\n\n2.4.7 Participate in review\nMaking the pull request will prompt a code review. The changes might be accepted immediately without modification, after a delay, be modified, or require discussion in the pull request chat.",
     "crumbs": [
+      "Development",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Contributing</span>"
     ]
   },
   {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "3  Summary",
+    "objectID": "recording-contributions.html",
+    "href": "recording-contributions.html",
+    "title": "3  Recording Contributions",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "text": "3.1 Using All Contributors\nThe All Contributors bot monitors GitHub issues and pull requests for specially constructed phrases containing the command @all-contributors add, with text that describes the nature of the contribution. For example, creating a new GitHub issue with the text:\nshould prompt the @all-contributors bot to modify files in the repository and record the requested information.\nPlease see this link for more information about command structure, and this link for a description of contribution types and the corresponding emojis.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Summary</span>"
+      "Development",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Recording Contributions</span>"
+    ]
+  },
+  {
+    "objectID": "recording-contributions.html#using-all-contributors",
+    "href": "recording-contributions.html#using-all-contributors",
+    "title": "3  Recording Contributions",
+    "section": "",
+    "text": "@all-contributors please add @widdowquinn for code and infrastructure\n\n\n\n3.1.1 Currently-monitored repositories\n\ndesign-documentation",
+    "crumbs": [
+      "Development",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Recording Contributions</span>"
+    ]
+  },
+  {
+    "objectID": "recording-contributions.html#which-files-are-modified-or-related-to-all-contributors",
+    "href": "recording-contributions.html#which-files-are-modified-or-related-to-all-contributors",
+    "title": "3  Recording Contributions",
+    "section": "3.2 Which files are modified, or related to @all-contributors?",
+    "text": "3.2 Which files are modified, or related to @all-contributors?\nContributions are recorded in two files: README.md and CONTRIBUTORS.md. These are automagically updated by the bot, and there are protected areas, fenced by the following directives:\n&lt;!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section --&gt;\n&lt;!-- prettier-ignore-start --&gt;\n&lt;!-- markdownlint-disable --&gt;\n\n&lt;!-- markdownlint-restore --&gt;\n&lt;!-- prettier-ignore-end --&gt;\n\n&lt;!-- ALL-CONTRIBUTORS-LIST:END --&gt;\n\nand\n&lt;!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --&gt;\n\n&lt;!-- ALL-CONTRIBUTORS-BADGE:END --&gt;\n\nThe format of how @all-contributors populates these sections is controlled by the .all-contributorsrc file.\n\n\n\n\n\n\nTip\n\n\n\nWhen attempting to set up the bot, errors of type “trouble processing your request” were received. The issue was fixed by deleting the .all-contributorsrc file, as per this issue.",
+    "crumbs": [
+      "Development",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Recording Contributions</span>"
     ]
   },
   {
@@ -108,6 +146,16 @@
     "crumbs": [
       "ANIm",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>The ANIm Methodology</span>"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "5  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
