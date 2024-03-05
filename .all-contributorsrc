@@ -1,4 +1,12 @@
 {
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
   "projectName": "design-documentation",
-  "projectOwner": "pyani-plus"
+  "projectOwner": "pyani-plus",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
 }
