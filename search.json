@@ -128,6 +128,16 @@
     ]
   },
   {
+    "objectID": "part-jobs.html",
+    "href": "part-jobs.html",
+    "title": "Job Distribution",
+    "section": "",
+    "text": "This section of the documentation contains material concerning third-party job distribution, e.g. using SGE/SLURM/Snakemake/asyncio.",
+    "crumbs": [
+      "Job Distribution"
+    ]
+  },
+  {
     "objectID": "part-anim.html",
     "href": "part-anim.html",
     "title": "ANIm",
