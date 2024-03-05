@@ -138,6 +138,17 @@
     ]
   },
   {
+    "objectID": "sqlite.html",
+    "href": "sqlite.html",
+    "title": "4  SQLite3",
+    "section": "",
+    "text": "This chapter describes our general approach to using sqlite3 for pyani-plus application data storage.\n\naiosqlite: library for asynchronous access to sqlite3",
+    "crumbs": [
+      "Job Distribution",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SQLite3</span>"
+    ]
+  },
+  {
     "objectID": "part-anim.html",
     "href": "part-anim.html",
     "title": "ANIm",
@@ -150,22 +161,22 @@
   {
     "objectID": "anim-method.html",
     "href": "anim-method.html",
-    "title": "4  The ANIm Methodology",
+    "title": "5  The ANIm Methodology",
     "section": "",
     "text": "This chapter describes how ANIm works.",
     "crumbs": [
       "ANIm",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The ANIm Methodology</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The ANIm Methodology</span>"
     ]
   },
   {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "5  Summary",
+    "title": "6  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
