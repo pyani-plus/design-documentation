@@ -5,7 +5,7 @@
   "imageSize": 100,
   "commit": false,
   "projectName": "design-documentation",
-  "projectOwner": "pyani-plus",
+  "projectOwner": "widdowquinn",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
