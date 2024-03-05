@@ -1,0 +1,12 @@
+# Ignore RStudio admin files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Ignore quarto admin files
+/.quarto/
+
+# Ignore compiled book
+_book
+_freeze

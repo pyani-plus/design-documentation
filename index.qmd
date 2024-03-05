@@ -1,0 +1,18 @@
+# Preface to `pyani-plus` design documentation {.unnumbered}
+
+Welcome to the design documentation for `pyani-plus`.
+
+::: { .callout-important }
+This is a live document under constant revision where the development team document aspects of the desired and actual behaviour of `pyani-plus` and associated tools. If you have suggestions, we would be very grateful to hear them [by email](mailto:{{< var admin.email >}}), through the [GitHub repository Issues page]({{< var github.issues >}}), or _via_ a [pull request]({{< var github.pr >}}).
+:::
+
+## Overview
+
+This set of webpages is a place for the `pyani-plus` development team to make notes about and otherwise record aspects of the design of `pyani-plus`. This may include but is not restricted to:
+
+- planned developments for `pyani-plus`
+- expected behaviour for `pyani-plus`
+- style guides and other team documentation
+- notes on genome comparison and other algorithms
+- notes on the use of third-party tools relevant to `pyani-plus`
+- expected and actual behaviour of third-party tools relevant to `pyani-plus`

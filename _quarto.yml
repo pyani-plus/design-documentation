@@ -1,0 +1,44 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "`pyani-plus` Design Documentation"
+  reader-mode: true
+  
+  cover-image: sipbs_compbio_800.png
+  favicon: icon_32.png
+  
+  page-footer:
+    left: |
+      `pyani-plus` Design Documentation
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  
+  repo-url: github.com/organizations/pyani-plus/design-documentation
+  repo-branch: main
+  repo-actions: [edit, issue]
+  
+  author: "Leighton Pritchard"
+  date: "2024-03-01"
+  
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+#    - glossary.qmd
+#    - resources.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    code-link: true
+    author-meta: "Leighton Pritchard"
+    
+execute: 
+  freeze: auto
+
+
