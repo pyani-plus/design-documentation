@@ -115,7 +115,17 @@
     "href": "resources.html",
     "title": "Resources",
     "section": "",
-    "text": "GitHub",
+    "text": "All Contributors",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "resources.html#all-contributors",
+    "href": "resources.html#all-contributors",
+    "title": "Resources",
+    "section": "",
+    "text": "All Contributors documentation: https://allcontributors.org/docs/en/overview",
     "crumbs": [
       "Resources"
     ]
@@ -124,8 +134,8 @@
     "objectID": "resources.html#github",
     "href": "resources.html#github",
     "title": "Resources",
-    "section": "",
-    "text": "Creating a GitHub issue: https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue\nCreating a pull request: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request\nGitHub Actions documentation: https://docs.github.com/en/actions\nRepository forks: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo",
+    "section": "GitHub",
+    "text": "GitHub\n\nCreating a GitHub issue: https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue\nCreating a pull request: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request\nGitHub Actions documentation: https://docs.github.com/en/actions\nRepository forks: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo",
     "crumbs": [
       "Resources"
     ]
