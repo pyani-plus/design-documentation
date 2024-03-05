@@ -3,6 +3,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rbuildignore
 
 # Ignore quarto admin files
 /.quarto/
