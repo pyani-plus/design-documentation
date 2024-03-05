@@ -30,9 +30,11 @@ book:
       - contributing.qmd
       - recording-contributions.qmd
     - part: part-jobs.qmd
+      chapters: 
+      - sqlite.qmd
     - part: part-anim.qmd
       chapters:
-        - anim-method.qmd
+      - anim-method.qmd
 #    - glossary.qmd
     - summary.qmd
     - resources.qmd
