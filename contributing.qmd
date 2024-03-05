@@ -136,4 +136,3 @@ Make a pull request against `main` from your new branch, at GitHub.
 ### Participate in review
 
 Making the pull request will prompt a code review. The changes might be accepted immediately without modification, after a delay, be modified, or require discussion in the pull request chat.
-
