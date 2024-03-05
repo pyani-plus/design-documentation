@@ -1,0 +1,50 @@
+# Recording Contributions
+
+We aim to record all contributions to `pyani-pure` in line with the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+
+## Using All Contributors
+
+The All Contributors bot monitors GitHub issues and pull requests for specially constructed phrases containing the command `@all-contributors add`, with text that describes the nature of the contribution. For example, creating a new GitHub issue with the text:
+
+```text
+@all-contributors please add @widdowquinn for code and infrastructure
+```
+
+should prompt the `@all-contributors` bot to modify files in the repository and record the requested information.
+
+Please see [this link](https://allcontributors.org/docs/en/bot/usage) for more information about command structure, and [this link](https://allcontributors.org/docs/en/emoji-key) for a description of contribution types and the corresponding emojis.
+
+### Currently-monitored repositories
+
+- `design-documentation`
+
+## Which files are modified, or related to `@all-contributors`?
+
+Contributions are recorded in two files: `README.md` and `CONTRIBUTORS.md`. These are automagically updated by the bot, and there are protected areas, fenced by the following directives:
+
+```text
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+```
+
+and
+
+```text
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+```
+
+The format of how `@all-contributors` populates these sections is controlled by the `.all-contributorsrc` file.
+
+::: { .callout-tip }
+When attempting to set up the bot, errors of type "trouble processing your request" were received. The issue was fixed by deleting the `.all-contributorsrc` file, as per [this issue](https://github.com/all-contributors/app/issues/198).
+:::

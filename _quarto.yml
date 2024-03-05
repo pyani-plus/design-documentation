@@ -25,12 +25,15 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - contributing.qmd
-    - summary.qmd
+    - part: part-dev.qmd
+      chapters:
+      - contributing.qmd
+      - recording-contributions.qmd
     - part: part-anim.qmd
       chapters:
         - anim-method.qmd
 #    - glossary.qmd
+    - summary.qmd
     - resources.qmd
     - references.qmd
 
