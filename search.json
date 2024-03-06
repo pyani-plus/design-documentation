@@ -214,13 +214,57 @@
     ]
   },
   {
+    "objectID": "deltafiles.html",
+    "href": "deltafiles.html",
+    "title": "6  .delta files",
+    "section": "",
+    "text": "6.1 Definition\n.delta file format is defined in the MUMmer3 manual (see below).",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>`.delta` files</span>"
+    ]
+  },
+  {
+    "objectID": "deltafiles.html#definition",
+    "href": "deltafiles.html#definition",
+    "title": "6  .delta files",
+    "section": "",
+    "text": "The .delta file format (from MUMmer 3 documentation)\n\n\n\n\n\nThe “delta” file is an encoded representation of the all-vs-all alignment between the input sequences to either the NUCmer or PROmer pipeline. It is the primary output of these alignment scripts and there are various utilities described in section 5.4. that are designed to take the delta file as input, and output some human-readable information to the user. Also, the delta-filter utility is designed to manipulate these files and select desired alignments. The primary function of the delta file is to catalog the coordinates of each alignment and note the distance between insertions and deletions contained in these alignments. By only storing the location of each indel as an offset, disk space is efficiently utilized, and a potentially enormous alignment can be stored in a relatively small space. The first line lists the two original input files separated by a space, while the second line specifies the alignment data type, either “NUCMER” or “PROMER”. Every grouping of alignments have a unique header specifying the two aligning sequences. Only sequences with shared alignments will have a header; therefore, there can be no empty headers (i.e. those that have no alignments following them). An example header might look like\n&gt;tagA1 tagB1 500 20000000\nFollowing this sequence header is the alignment data. Each alignment following also has a header that describes the coordinates of the alignment and some error information. These coordinates are inclusive and reference the forward strand of the DNA sequence, regardless of the alignment type (DNA or amino acid). Thus, if the start coordinate is greater than the end coordinate, the alignment is on the reverse strand. The four coordinates are the start and end in the reference and the start and end in the query respectively. The three digits following the location coordinates are the number of errors (non-identities + indels), similarity errors (non-positive match scores), and stop codons (does not apply to DNA alignments, will be “0”). An example header might look like:\n2631 3401 2464 3234 15 15 2\nNotice that the start coordinate points to the first base in the first codon, and the end coordinate points to the last base in the last codon. Therefore making (end - start + 1) % 3 = 0. This makes determining the frame of the amino acid alignment a simple matter of determining the reading frame of the start coordinate for the reference and query. Obviously, these calculations are not necessary when dealing with vanilla DNA alignments.\nEach of these alignment headers is followed by a string of signed digits, one per line, with the final line before the next header equaling 0 (zero). Each digit represents the distance to the next insertion in the reference (positive int) or deletion in the reference (negative int), as measured in DNA bases OR amino acids depending on the alignment data type. For example, with the PROMER data type, the delta sequence (1, -3, 4, 0) would represent an insertion at positions 1 and 7 in the translated reference sequence and an insertion at position 3 in the translated query sequence. Or with letters:\nA = ABCDACBDCAC$\nB = BCCDACDCAC$\nDelta = (1, -3, 4, 0)\nA = ABC.DACBDCAC$\nB = .BCCDAC.DCAC$\nUsing this delta information, it is possible to re-generate the alignments calculated by nucmer or promer as is done in the show-coords program. This allows various utilities to be crafted to process and analyze the alignment data using a universal format. This also means the delta only needs to be created once, yet it can be analyzed numerous times without ever having to rerun the costly alignment algorithm. Below is an example of what a delta file might look like:\n/home/username/reference.fasta /home/username/query.fasta\nPROMER\n&gt;tagA1 tagB1 3000000 2000000\n1667803 1667078 1641506 1640769 14 7 2\n-145\n-3\n-1\n-40\n0\n1667804 1667079 1641507 1640770 10 5 3\n-146\n-1\n-1\n-34\n0\n&gt;tagA2 tagB4 4000 3000\n2631 3401 2464 3234 4 0 0\n0\n2608 3402 2456 3235 10 5 0\n7\n1\n1\n1\n1\n0\n(output continues ...)",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>`.delta` files</span>"
+    ]
+  },
+  {
+    "objectID": "deltafiles.html#sec-interpreting-alignments",
+    "href": "deltafiles.html#sec-interpreting-alignments",
+    "title": "6  .delta files",
+    "section": "6.2 Interpreting alignments",
+    "text": "6.2 Interpreting alignments\nIn the MUMmer documentation (see callout box above), an example alignment is presented:\nA = ATCGACTGCAC$\nB = TCCGACGCAC$\nDelta = (1, -3, 4, 0)\nA = ATC.GACTGCAC$\nB = .TCCGAC.GCAC$\nHere, A is the query and B is the reference. The corresponding .delta file would look like this:\nA.fna\nB.fna\nNUCMER\n&gt; A B 11 10 \n1 11 1 10 3 3 0\n1\n-3\n4\n0\nWe can obtain, or calculate, a number of values for this alignment.\n\nquery sequence length: 11\nreference sequence length: 10\nquery alignment start base: 1\nquery alignment end base: 11\n\nquery alignment length = 11 - 1 + 1 = 11\n\nreference alignment start base: 1\nreference alignment end base: 10\n\nreference alignment length = 10 - 1 + 1 = 10\n\nerrors: 3\nsimilarity errors: 3\ninsertions in the query: 1 (one negative value)\ninsertions in the reference: 2 (two positive values)\ntotal indel count: 3 (the count of nonzero numbers after the alignment header)\n\nBut how long is the alignment? There are 12 positions in the alignment: 11 query bases plus a gap (insertion in the reference); or 10 reference bases plus two gaps (insertions in the query).\n\n\n\n\n\n\nImportant\n\n\n\nThe length of the alignment is 12, and it is longer than either of the aligned sequences.\n\n\n\ntotal alignment length: 12\n\nquery length plus insertions in the query: 11 + 1\nreference length plus insertions in the reference: 10 + 2\n\n\nFrom this alignment we can calculate the coverage for the query and the reference sequence, and the percentage identity for the match.\n\n6.2.1 Percentage identity\nThe percentage identity of the match is the fraction of aligned, matching bases in the alignment. Inspection of the alignment above tells us that this is 9/12 = 0.75. This value can also be calculated from the total alignment length and the number of similarity errors (mismatches plus gaps).\n\n\n\n\n\n\nPercentage identity calculation\n\n\n\n\\[\\textrm{percentage identity} = 1 - \\frac{\\textrm{similarity errors}}{\\textrm{total alignment length}}\\]\n\n\n\n\n6.2.2 Coverage\nCoverage is calculated separately for the two aligned sequences. Query coverage is the proportion of bases in the query that are aligned to a base in the reference sequence. Reference coverage is the proportion of bases in the reference that are aligned to a base in the query sequence.\nThe number of aligned bases is the same for both sequences. In the alignment above it is 12 - 3 = 9, the total alignment length minus the total indel count. But the lengths of the sequences differ, as do the number of so the coverages are:\n\n\n\n\n\n\nPercentage identity calculation\n\n\n\n\\[\\textrm{query coverage} = 1 - \\frac{\\textrm{total alignment length - total indel count}}{\\textrm{query length}}\\] \\[\\textrm{reference coverage} = 1 - \\frac{\\textrm{total alignment length - total indel count}}{\\textrm{reference length}}\\]\n\n\nWhich here gives us a query coverage of 9/11 ≈ 0.82, and a reference coverage of 9/12 = 0.75.",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>`.delta` files</span>"
+    ]
+  },
+  {
+    "objectID": "deltafiles.html#overlapping-alignments",
+    "href": "deltafiles.html#overlapping-alignments",
+    "title": "6  .delta files",
+    "section": "6.3 Overlapping alignments",
+    "text": "6.3 Overlapping alignments\nThe approach in Section 6.2 works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>`.delta` files</span>"
+    ]
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "6  Summary",
+    "title": "7  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {
@@ -239,6 +283,16 @@
     "title": "Resources",
     "section": "",
     "text": "All Contributors documentation: https://allcontributors.org/docs/en/overview",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "resources.html#click",
+    "href": "resources.html#click",
+    "title": "Resources",
+    "section": "click",
+    "text": "click\n\nclick documentation: https://click.palletsprojects.com/en/8.1.x/",
     "crumbs": [
       "Resources"
     ]
@@ -278,7 +332,7 @@
     "href": "resources.html#mummer",
     "title": "Resources",
     "section": "MUMmer",
-    "text": "MUMmer\n\nMUMmer3 manual: https://mummer.sourceforge.net/manual/\n\n.delta output format: https://mummer.sourceforge.net/manual/#nucmeroutput\nshow-coords with description of output format: https://mummer.sourceforge.net/manual/#coords\n\nKurtz et al. (2004)",
+    "text": "MUMmer\n\nMUMmer3 manual: https://mummer.sourceforge.net/manual/\n\n.delta output format: https://mummer.sourceforge.net/manual/#nucmeroutput\nshow-coords with description of output format: https://mummer.sourceforge.net/manual/#coords\n\n\n\nPublications\n\nKurtz et al. (2004)",
     "crumbs": [
       "Resources"
     ]
@@ -299,6 +353,16 @@
     "title": "Resources",
     "section": "R/RStudio",
     "text": "R/RStudio\n\nRStudio Desktop: https://posit.co/download/rstudio-desktop/",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "resources.html#rich",
+    "href": "resources.html#rich",
+    "title": "Resources",
+    "section": "rich",
+    "text": "rich\n\nrich documentation: https://rich.readthedocs.io/en/stable/introduction.html",
     "crumbs": [
       "Resources"
     ]

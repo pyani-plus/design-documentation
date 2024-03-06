@@ -8,7 +8,7 @@
 
 <meta name="author" content="Leighton Pritchard">
 
-<title>pyani-plus Design Documentation - Development</title>
+<title>pyani-plus Design Documentation - 6&nbsp; .delta files</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./contributing.html" rel="next">
-<link href="./intro.html" rel="prev">
+<link href="./summary.html" rel="next">
+<link href="./anim-method.html" rel="prev">
 <link href="./icon_32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-dev.html">Development</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./deltafiles.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -130,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part-dev.html" class="sidebar-item-text sidebar-link active">
+            <a href="./part-dev.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Development</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -185,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./deltafiles.html" class="sidebar-item-text sidebar-link">
+  <a href="./deltafiles.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></span></a>
   </div>
 </li>
@@ -215,14 +244,26 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#definition" id="toc-definition" class="nav-link active" data-scroll-target="#definition"><span class="header-section-number">6.1</span> Definition</a></li>
+  <li><a href="#sec-interpreting-alignments" id="toc-sec-interpreting-alignments" class="nav-link" data-scroll-target="#sec-interpreting-alignments"><span class="header-section-number">6.2</span> Interpreting alignments</a>
+  <ul class="collapse">
+  <li><a href="#percentage-identity" id="toc-percentage-identity" class="nav-link" data-scroll-target="#percentage-identity"><span class="header-section-number">6.2.1</span> Percentage identity</a></li>
+  <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage"><span class="header-section-number">6.2.2</span> Coverage</a></li>
+  </ul></li>
+  <li><a href="#overlapping-alignments" id="toc-overlapping-alignments" class="nav-link" data-scroll-target="#overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/deltafiles.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./deltafiles.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-dev" class="quarto-section-identifier">Development</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></h1>
 </div>
 
 
@@ -239,9 +280,167 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This section of the documentation describes style and good practices choices for the repository. Please consult this if you are a project developer, or would like to make a contribution.</p>
+<p>This chapter describes how we interpret MUMmer’s main output file, the <code>.delta</code> format file, in order to calculate key measures of sequence similarity: <strong>sequence identity</strong> and <strong>genome coverage</strong>.</p>
+<section id="definition" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">6.1</span> Definition</h2>
+<p><code>.delta</code> file format is defined in the <a href="https://mummer.sourceforge.net/manual/#nucmeroutput">MUMmer3 manual</a> (see below).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The <code>.delta</code> file format (from MUMmer 3 documentation)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The “delta” file is an encoded representation of the all-vs-all alignment between the input sequences to either the NUCmer or PROmer pipeline. It is the primary output of these alignment scripts and there are various utilities described in section 5.4. that are designed to take the delta file as input, and output some human-readable information to the user. Also, the delta-filter utility is designed to manipulate these files and select desired alignments. The primary function of the delta file is to catalog the coordinates of each alignment and note the distance between insertions and deletions contained in these alignments. By only storing the location of each indel as an offset, disk space is efficiently utilized, and a potentially enormous alignment can be stored in a relatively small space. The first line lists the two original input files separated by a space, while the second line specifies the alignment data type, either “NUCMER” or “PROMER”. Every grouping of alignments have a unique header specifying the two aligning sequences. Only sequences with shared alignments will have a header; therefore, there can be no empty headers (i.e.&nbsp;those that have no alignments following them). An example header might look like</p>
+<pre><code>&gt;tagA1 tagB1 500 20000000</code></pre>
+<p>Following this sequence header is the alignment data. Each alignment following also has a header that describes the coordinates of the alignment and some error information. These coordinates are inclusive and reference the forward strand of the DNA sequence, regardless of the alignment type (DNA or amino acid). Thus, if the start coordinate is greater than the end coordinate, the alignment is on the reverse strand. The four coordinates are the start and end in the reference and the start and end in the query respectively. The three digits following the location coordinates are the number of errors (non-identities + indels), similarity errors (non-positive match scores), and stop codons (does not apply to DNA alignments, will be “0”). An example header might look like:</p>
+<pre><code>2631 3401 2464 3234 15 15 2</code></pre>
+<p>Notice that the start coordinate points to the first base in the first codon, and the end coordinate points to the last base in the last codon. Therefore making (end - start + 1) % 3 = 0. This makes determining the frame of the amino acid alignment a simple matter of determining the reading frame of the start coordinate for the reference and query. Obviously, these calculations are not necessary when dealing with vanilla DNA alignments.</p>
+<p>Each of these alignment headers is followed by a string of signed digits, one per line, with the final line before the next header equaling 0 (zero). Each digit represents the distance to the next insertion in the reference (positive int) or deletion in the reference (negative int), as measured in DNA bases OR amino acids depending on the alignment data type. For example, with the PROMER data type, the delta sequence (1, -3, 4, 0) would represent an insertion at positions 1 and 7 in the translated reference sequence and an insertion at position 3 in the translated query sequence. Or with letters:</p>
+<pre><code>A = ABCDACBDCAC$
+B = BCCDACDCAC$
+Delta = (1, -3, 4, 0)
+A = ABC.DACBDCAC$
+B = .BCCDAC.DCAC$</code></pre>
+<p>Using this delta information, it is possible to re-generate the alignments calculated by nucmer or promer as is done in the show-coords program. This allows various utilities to be crafted to process and analyze the alignment data using a universal format. This also means the delta only needs to be created once, yet it can be analyzed numerous times without ever having to rerun the costly alignment algorithm. Below is an example of what a delta file might look like:</p>
+<pre><code>/home/username/reference.fasta /home/username/query.fasta
+PROMER
+&gt;tagA1 tagB1 3000000 2000000
+1667803 1667078 1641506 1640769 14 7 2
+-145
+-3
+-1
+-40
+0
+1667804 1667079 1641507 1640770 10 5 3
+-146
+-1
+-1
+-34
+0
+&gt;tagA2 tagB4 4000 3000
+2631 3401 2464 3234 4 0 0
+0
+2608 3402 2456 3235 10 5 0
+7
+1
+1
+1
+1
+0
+(output continues ...)</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-interpreting-alignments" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-interpreting-alignments"><span class="header-section-number">6.2</span> Interpreting alignments</h2>
+<p>In the MUMmer documentation (see callout box above), an example alignment is presented:</p>
+<pre class="text"><code>A = ATCGACTGCAC$
+B = TCCGACGCAC$
+Delta = (1, -3, 4, 0)
+A = ATC.GACTGCAC$
+B = .TCCGAC.GCAC$</code></pre>
+<p>Here, <code>A</code> is the query and <code>B</code> is the reference. The corresponding <code>.delta</code> file would look like this:</p>
+<pre class="text"><code>A.fna
+B.fna
+NUCMER
+&gt; A B 11 10 
+1 11 1 10 3 3 0
+1
+-3
+4
+0</code></pre>
+<p>We can obtain, or calculate, a number of values for this alignment.</p>
+<ul>
+<li>query sequence length: 11</li>
+<li>reference sequence length: 10</li>
+<li>query alignment start base: 1</li>
+<li>query alignment end base: 11
+<ul>
+<li>query alignment length = 11 - 1 + 1 = 11</li>
+</ul></li>
+<li>reference alignment start base: 1</li>
+<li>reference alignment end base: 10
+<ul>
+<li>reference alignment length = 10 - 1 + 1 = 10</li>
+</ul></li>
+<li>errors: 3</li>
+<li>similarity errors: 3</li>
+<li>insertions in the query: 1 (one negative value)</li>
+<li>insertions in the reference: 2 (two positive values)</li>
+<li>total indel count: 3 (the count of nonzero numbers after the alignment header)</li>
+</ul>
+<p>But how long is the alignment? There are 12 positions in the alignment: 11 query bases plus a gap (insertion in the reference); or 10 reference bases plus two gaps (insertions in the query).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The length of the alignment is 12, and it is longer than either of the aligned sequences.</p>
+</div>
+</div>
+<ul>
+<li>total alignment length: 12
+<ul>
+<li>query length plus insertions in the query: 11 + 1</li>
+<li>reference length plus insertions in the reference: 10 + 2</li>
+</ul></li>
+</ul>
+<p>From this alignment we can calculate the coverage for the query and the reference sequence, and the percentage identity for the match.</p>
+<section id="percentage-identity" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="percentage-identity"><span class="header-section-number">6.2.1</span> Percentage identity</h3>
+<p>The percentage identity of the match is the fraction of aligned, matching bases in the alignment. Inspection of the alignment above tells us that this is 9/12 = 0.75. This value can also be calculated from the total alignment length and the number of similarity errors (mismatches plus gaps).</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Percentage identity calculation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Percentage identity calculation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\textrm{percentage identity} = 1 - \frac{\textrm{similarity errors}}{\textrm{total alignment length}}\]</span></p>
+</div>
+</div>
+</section>
+<section id="coverage" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="coverage"><span class="header-section-number">6.2.2</span> Coverage</h3>
+<p>Coverage is calculated separately for the two aligned sequences. <strong>Query coverage</strong> is the proportion of bases in the query that are aligned to a base in the reference sequence. <strong>Reference coverage</strong> is the proportion of bases in the reference that are aligned to a base in the query sequence.</p>
+<p>The number of aligned bases is the same for both sequences. In the alignment above it is 12 - 3 = 9, the total alignment length minus the total indel count. But the lengths of the sequences differ, as do the number of so the coverages are:</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Percentage identity calculation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Percentage identity calculation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\textrm{query coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{query length}}\]</span> <span class="math display">\[\textrm{reference coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{reference length}}\]</span></p>
+</div>
+</div>
+<p>Which here gives us a <strong>query coverage</strong> of 9/11 ≈ 0.82, and a <strong>reference coverage</strong> of 9/12 = 0.75.</p>
+</section>
+</section>
+<section id="overlapping-alignments" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</h2>
+<p>The approach in <a href="#sec-interpreting-alignments" class="quarto-xref"><span>Section 6.2</span></a> works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -655,13 +854,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      <a href="./anim-method.html" class="pagination-link" aria-label="The ANIm Methodology">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The ANIm Methodology</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./contributing.html" class="pagination-link" aria-label="Contributing">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Contributing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -673,7 +872,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/part-dev.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/deltafiles.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
