@@ -196,7 +196,18 @@
     "href": "anim-method.html",
     "title": "5  The ANIm Methodology",
     "section": "",
-    "text": "This chapter describes how ANIm works.",
+    "text": "5.1 Publications describing ANIm",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>The ANIm Methodology</span>"
+    ]
+  },
+  {
+    "objectID": "anim-method.html#publications-describing-anim",
+    "href": "anim-method.html#publications-describing-anim",
+    "title": "5  The ANIm Methodology",
+    "section": "",
+    "text": "Richter and Rosselló-Móra (2009): The initial announcement of the ANIm method\n\n\n\n\n\nRichter, Michael, and Ramon Rosselló-Móra. 2009. “Shifting the Genomic Gold Standard for the Prokaryotic Species Definition.” Proc. Natl. Acad. Sci. U. S. A. 106 (45): 19126–31.",
     "crumbs": [
       "ANIm",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>The ANIm Methodology</span>"
@@ -233,11 +244,41 @@
     ]
   },
   {
+    "objectID": "resources.html#doi-to-bibtex-conversion",
+    "href": "resources.html#doi-to-bibtex-conversion",
+    "title": "Resources",
+    "section": "DOI to BibTeX conversion",
+    "text": "DOI to BibTeX conversion\n\nDOI to BibTeX converter: https://www.bibtex.com/c/doi-to-bibtex-converter/",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
     "objectID": "resources.html#github",
     "href": "resources.html#github",
     "title": "Resources",
     "section": "GitHub",
     "text": "GitHub\n\nCreating a GitHub issue: https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue\nCreating a pull request: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request\nGitHub Actions documentation: https://docs.github.com/en/actions\nRepository forks: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "resources.html#jspecies",
+    "href": "resources.html#jspecies",
+    "title": "Resources",
+    "section": "JSpecies",
+    "text": "JSpecies\n\nJSpeciesWS online service: https://jspecies.ribohost.com/jspeciesws/#home",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "resources.html#mummer",
+    "href": "resources.html#mummer",
+    "title": "Resources",
+    "section": "MUMmer",
+    "text": "MUMmer\n\nMUMmer3 manual: https://mummer.sourceforge.net/manual/\n\n.delta output format: https://mummer.sourceforge.net/manual/#nucmeroutput\nshow-coords with description of output format: https://mummer.sourceforge.net/manual/#coords\n\nKurtz et al. (2004)",
     "crumbs": [
       "Resources"
     ]
@@ -277,9 +318,19 @@
     "href": "resources.html#visual-studio-code",
     "title": "Resources",
     "section": "Visual Studio Code",
-    "text": "Visual Studio Code\n\nVisual Studio Code: https://code.visualstudio.com/",
+    "text": "Visual Studio Code\n\nVisual Studio Code: https://code.visualstudio.com/\n\n\n\n\n\nKurtz, Stefan, Adam Phillippy, Arthur L Delcher, Michael Smoot, Martin Shumway, Corina Antonescu, and Steven L Salzberg. 2004. “Versatile and Open Software for Comparing Large Genomes.” Genome Biol. 5 (2): R12.",
     "crumbs": [
       "Resources"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Kurtz, Stefan, Adam Phillippy, Arthur L Delcher, Michael Smoot, Martin\nShumway, Corina Antonescu, and Steven L Salzberg. 2004. “Versatile\nand Open Software for Comparing Large Genomes.” Genome\nBiol. 5 (2): R12.\n\n\nRichter, Michael, and Ramon Rosselló-Móra. 2009. “Shifting the\nGenomic Gold Standard for the Prokaryotic Species Definition.”\nProc. Natl. Acad. Sci. U. S. A. 106 (45): 19126–31.",
+    "crumbs": [
+      "References"
     ]
   }
 ]

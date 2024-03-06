@@ -21,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -209,7 +229,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#publications-describing-anim" id="toc-publications-describing-anim" class="nav-link active" data-scroll-target="#publications-describing-anim"><span class="header-section-number">5.1</span> Publications describing ANIm</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/anim-method.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -234,8 +260,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This chapter describes how ANIm works.</p>
+<section id="publications-describing-anim" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="publications-describing-anim"><span class="header-section-number">5.1</span> Publications describing ANIm</h2>
+<ul>
+<li><span class="citation" data-cites="Richter2009-qn">Richter and Rosselló-Móra (<a href="references.html#ref-Richter2009-qn" role="doc-biblioref">2009</a>)</span>: The initial announcement of the ANIm method</li>
+</ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Richter2009-qn" class="csl-entry" role="listitem">
+Richter, Michael, and Ramon Rosselló-Móra. 2009. <span>“Shifting the Genomic Gold Standard for the Prokaryotic Species Definition.”</span> <em>Proc. Natl. Acad. Sci. U. S. A.</em> 106 (45): 19126–31.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -667,7 +704,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/anim-method.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/anim-method.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

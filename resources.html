@@ -21,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -214,7 +234,10 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#all-contributors" id="toc-all-contributors" class="nav-link active" data-scroll-target="#all-contributors"><code>All Contributors</code></a></li>
+  <li><a href="#doi-to-bibtex-conversion" id="toc-doi-to-bibtex-conversion" class="nav-link" data-scroll-target="#doi-to-bibtex-conversion">DOI to BibTeX conversion</a></li>
   <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github"><code>GitHub</code></a></li>
+  <li><a href="#jspecies" id="toc-jspecies" class="nav-link" data-scroll-target="#jspecies"><code>JSpecies</code></a></li>
+  <li><a href="#mummer" id="toc-mummer" class="nav-link" data-scroll-target="#mummer"><code>MUMmer</code></a></li>
   <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><code>Quarto</code></a></li>
   <li><a href="#rrstudio" id="toc-rrstudio" class="nav-link" data-scroll-target="#rrstudio"><code>R</code>/<code>RStudio</code></a></li>
   <li><a href="#sqlite3" id="toc-sqlite3" class="nav-link" data-scroll-target="#sqlite3"><code>SQLite3</code></a></li>
@@ -250,6 +273,12 @@ ul.task-list li input[type="checkbox"] {
 <li>All Contributors documentation: <a href="https://allcontributors.org/docs/en/overview">https://allcontributors.org/docs/en/overview</a></li>
 </ul>
 </section>
+<section id="doi-to-bibtex-conversion" class="level2">
+<h2 class="anchored" data-anchor-id="doi-to-bibtex-conversion">DOI to BibTeX conversion</h2>
+<ul>
+<li>DOI to BibTeX converter: <a href="https://www.bibtex.com/c/doi-to-bibtex-converter/">https://www.bibtex.com/c/doi-to-bibtex-converter/</a></li>
+</ul>
+</section>
 <section id="github" class="level2">
 <h2 class="anchored" data-anchor-id="github"><code>GitHub</code></h2>
 <ul>
@@ -257,6 +286,23 @@ ul.task-list li input[type="checkbox"] {
 <li>Creating a pull request: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request">https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request</a></li>
 <li>GitHub Actions documentation: <a href="https://docs.github.com/en/actions">https://docs.github.com/en/actions</a></li>
 <li>Repository forks: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo</a></li>
+</ul>
+</section>
+<section id="jspecies" class="level2">
+<h2 class="anchored" data-anchor-id="jspecies"><code>JSpecies</code></h2>
+<ul>
+<li><code>JSpeciesWS</code> online service: <a href="https://jspecies.ribohost.com/jspeciesws/#home">https://jspecies.ribohost.com/jspeciesws/#home</a></li>
+</ul>
+</section>
+<section id="mummer" class="level2">
+<h2 class="anchored" data-anchor-id="mummer"><code>MUMmer</code></h2>
+<ul>
+<li>MUMmer3 manual: <a href="https://mummer.sourceforge.net/manual/">https://mummer.sourceforge.net/manual/</a>
+<ul>
+<li><code>.delta</code> output format: <a href="https://mummer.sourceforge.net/manual/#nucmeroutput">https://mummer.sourceforge.net/manual/#nucmeroutput</a></li>
+<li><code>show-coords</code> with description of output format: <a href="https://mummer.sourceforge.net/manual/#coords">https://mummer.sourceforge.net/manual/#coords</a></li>
+</ul></li>
+<li><span class="citation" data-cites="Kurtz2004-ut">Kurtz et al. (<a href="references.html#ref-Kurtz2004-ut" role="doc-biblioref">2004</a>)</span></li>
 </ul>
 </section>
 <section id="quarto" class="level2">
@@ -291,6 +337,11 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Kurtz2004-ut" class="csl-entry" role="listitem">
+Kurtz, Stefan, Adam Phillippy, Arthur L Delcher, Michael Smoot, Martin Shumway, Corina Antonescu, and Steven L Salzberg. 2004. <span>“Versatile and Open Software for Comparing Large Genomes.”</span> <em>Genome Biol.</em> 5 (2): R12.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
