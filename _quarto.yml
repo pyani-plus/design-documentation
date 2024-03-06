@@ -35,6 +35,7 @@ book:
     - part: part-anim.qmd
       chapters:
       - anim-method.qmd
+      - deltafiles.qmd
 #    - glossary.qmd
     - summary.qmd
     - resources.qmd

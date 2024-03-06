@@ -4,6 +4,10 @@
 
 - All Contributors documentation: [https://allcontributors.org/docs/en/overview](https://allcontributors.org/docs/en/overview)
 
+## `click`
+
+- `click` documentation: [https://click.palletsprojects.com/en/8.1.x/](https://click.palletsprojects.com/en/8.1.x/)
+
 ## DOI to BibTeX conversion
 
 - DOI to BibTeX converter: [https://www.bibtex.com/c/doi-to-bibtex-converter/](https://www.bibtex.com/c/doi-to-bibtex-converter/)
@@ -25,6 +29,8 @@
   - `.delta` output format: [https://mummer.sourceforge.net/manual/#nucmeroutput](https://mummer.sourceforge.net/manual/#nucmeroutput)
   - `show-coords` with description of output format: [https://mummer.sourceforge.net/manual/#coords](https://mummer.sourceforge.net/manual/#coords)
 
+### Publications
+
 - @Kurtz2004-ut
 
 ## `Quarto`
@@ -36,6 +42,10 @@
 ## `R`/`RStudio`
 
 - `RStudio` Desktop: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+## `rich`
+
+- `rich` documentation: [https://rich.readthedocs.io/en/stable/introduction.html](https://rich.readthedocs.io/en/stable/introduction.html)
 
 ## `SQLite3`
 

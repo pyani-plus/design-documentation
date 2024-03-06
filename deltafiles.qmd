@@ -1,0 +1,147 @@
+# `.delta` files
+
+This chapter describes how we interpret MUMmer's main output file, the `.delta` format file, in order to calculate key measures of sequence similarity: **sequence identity** and **genome coverage**.
+
+## Definition
+
+`.delta` file format is defined in the [MUMmer3 manual](https://mummer.sourceforge.net/manual/#nucmeroutput) (see below).
+
+::: { .callout-note collapse="true" }
+## The `.delta` file format (from MUMmer 3 documentation)
+
+The "delta" file is an encoded representation of the all-vs-all alignment between the input sequences to either the NUCmer or PROmer pipeline. It is the primary output of these alignment scripts and there are various utilities described in section 5.4. that are designed to take the delta file as input, and output some human-readable information to the user. Also, the delta-filter utility is designed to manipulate these files and select desired alignments. The primary function of the delta file is to catalog the coordinates of each alignment and note the distance between insertions and deletions contained in these alignments. By only storing the location of each indel as an offset, disk space is efficiently utilized, and a potentially enormous alignment can be stored in a relatively small space. The first line lists the two original input files separated by a space, while the second line specifies the alignment data type, either "NUCMER" or "PROMER". Every grouping of alignments have a unique header specifying the two aligning sequences. Only sequences with shared alignments will have a header; therefore, there can be no empty headers (i.e. those that have no alignments following them). An example header might look like
+
+```
+>tagA1 tagB1 500 20000000
+```
+
+Following this sequence header is the alignment data. Each alignment following also has a header that describes the coordinates of the alignment and some error information. These coordinates are inclusive and reference the forward strand of the DNA sequence, regardless of the alignment type (DNA or amino acid). Thus, if the start coordinate is greater than the end coordinate, the alignment is on the reverse strand. The four coordinates are the start and end in the reference and the start and end in the query respectively. The three digits following the location coordinates are the number of errors (non-identities + indels), similarity errors (non-positive match scores), and stop codons (does not apply to DNA alignments, will be "0"). An example header might look like:
+
+```
+2631 3401 2464 3234 15 15 2
+```
+
+Notice that the start coordinate points to the first base in the first codon, and the end coordinate points to the last base in the last codon. Therefore making (end - start + 1) % 3 = 0. This makes determining the frame of the amino acid alignment a simple matter of determining the reading frame of the start coordinate for the reference and query. Obviously, these calculations are not necessary when dealing with vanilla DNA alignments.
+
+Each of these alignment headers is followed by a string of signed digits, one per line, with the final line before the next header equaling 0 (zero). Each digit represents the distance to the next insertion in the reference (positive int) or deletion in the reference (negative int), as measured in DNA bases OR amino acids depending on the alignment data type. For example, with the PROMER data type, the delta sequence (1, -3, 4, 0) would represent an insertion at positions 1 and 7 in the translated reference sequence and an insertion at position 3 in the translated query sequence. Or with letters:
+
+```
+A = ABCDACBDCAC$
+B = BCCDACDCAC$
+Delta = (1, -3, 4, 0)
+A = ABC.DACBDCAC$
+B = .BCCDAC.DCAC$
+```
+
+Using this delta information, it is possible to re-generate the alignments calculated by nucmer or promer as is done in the show-coords program. This allows various utilities to be crafted to process and analyze the alignment data using a universal format. This also means the delta only needs to be created once, yet it can be analyzed numerous times without ever having to rerun the costly alignment algorithm. Below is an example of what a delta file might look like:
+
+```
+/home/username/reference.fasta /home/username/query.fasta
+PROMER
+>tagA1 tagB1 3000000 2000000
+1667803 1667078 1641506 1640769 14 7 2
+-145
+-3
+-1
+-40
+0
+1667804 1667079 1641507 1640770 10 5 3
+-146
+-1
+-1
+-34
+0
+>tagA2 tagB4 4000 3000
+2631 3401 2464 3234 4 0 0
+0
+2608 3402 2456 3235 10 5 0
+7
+1
+1
+1
+1
+0
+(output continues ...)
+```
+:::
+
+## Interpreting alignments {#sec-interpreting-alignments}
+
+In the MUMmer documentation (see callout box above), an example alignment is presented:
+
+```text
+A = ATCGACTGCAC$
+B = TCCGACGCAC$
+Delta = (1, -3, 4, 0)
+A = ATC.GACTGCAC$
+B = .TCCGAC.GCAC$
+```
+
+Here, `A` is the query and `B` is the reference. The corresponding `.delta` file would look like this:
+
+```text
+A.fna
+B.fna
+NUCMER
+> A B 11 10 
+1 11 1 10 3 3 0
+1
+-3
+4
+0
+```
+
+We can obtain, or calculate, a number of values for this alignment.
+
+- query sequence length: 11
+- reference sequence length: 10
+- query alignment start base: 1
+- query alignment end base: 11
+  - query alignment length = 11 - 1 + 1 = 11
+- reference alignment start base: 1
+- reference alignment end base: 10
+  - reference alignment length = 10 - 1 + 1 = 10
+- errors: 3
+- similarity errors: 3
+- insertions in the query: 1 (one negative value)
+- insertions in the reference: 2 (two positive values)
+- total indel count: 3 (the count of nonzero numbers after the alignment header)
+
+But how long is the alignment? There are 12 positions in the alignment: 11 query bases plus a gap (insertion in the reference); or 10 reference bases plus two gaps (insertions in the query).
+
+::: { .callout-important }
+The length of the alignment is 12, and it is longer than either of the aligned sequences.
+:::
+
+- total alignment length: 12
+  - query length plus insertions in the query: 11 + 1
+  - reference length plus insertions in the reference: 10 + 2
+
+
+From this alignment we can calculate the coverage for the query and the reference sequence, and the percentage identity for the match.
+
+### Percentage identity
+
+The percentage identity of the match is the fraction of aligned, matching bases in the alignment. Inspection of the alignment above tells us that this is 9/12 = 0.75. This value can also be calculated from the total alignment length and the number of similarity errors (mismatches plus gaps).
+
+::: { .callout-warning title="Percentage identity calculation"}
+$$\textrm{percentage identity} = 1 - \frac{\textrm{similarity errors}}{\textrm{total alignment length}}$$
+:::
+
+### Coverage
+
+Coverage is calculated separately for the two aligned sequences. **Query coverage** is the proportion of bases in the query that are aligned to a base in the reference sequence. **Reference coverage** is the proportion of bases in the reference that are aligned to a base in the query sequence.
+
+The number of aligned bases is the same for both sequences. In the alignment above it is 12 - 3 = 9, the total alignment length minus the total indel count. But the lengths of the sequences differ, as do the number of so the coverages are:
+
+::: { .callout-warning title="Percentage identity calculation"}
+$$\textrm{query coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{query length}}$$
+$$\textrm{reference coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{reference length}}$$
+:::
+
+Which here gives us a **query coverage** of 9/11 ≈ 0.82, and a **reference coverage** of 9/12 = 0.75.
+
+## Overlapping alignments
+
+The approach in @sec-interpreting-alignments works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.
+
