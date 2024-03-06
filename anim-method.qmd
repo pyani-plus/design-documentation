@@ -1,3 +1,7 @@
 # The ANIm Methodology
 
 This chapter describes how ANIm works.
+
+## Publications describing ANIm
+
+- @Richter2009-qn: The initial announcement of the ANIm method

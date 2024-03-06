@@ -4,12 +4,28 @@
 
 - All Contributors documentation: [https://allcontributors.org/docs/en/overview](https://allcontributors.org/docs/en/overview)
 
+## DOI to BibTeX conversion
+
+- DOI to BibTeX converter: [https://www.bibtex.com/c/doi-to-bibtex-converter/](https://www.bibtex.com/c/doi-to-bibtex-converter/)
+
 ## `GitHub`
 
 - Creating a GitHub issue: [https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
 - Creating a pull request: [https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
 - GitHub Actions documentation: [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
 - Repository forks: [https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+
+## `JSpecies`
+
+- `JSpeciesWS` online service: [https://jspecies.ribohost.com/jspeciesws/#home](https://jspecies.ribohost.com/jspeciesws/#home)
+
+## `MUMmer`
+
+- MUMmer3 manual: [https://mummer.sourceforge.net/manual/](https://mummer.sourceforge.net/manual/)
+  - `.delta` output format: [https://mummer.sourceforge.net/manual/#nucmeroutput](https://mummer.sourceforge.net/manual/#nucmeroutput)
+  - `show-coords` with description of output format: [https://mummer.sourceforge.net/manual/#coords](https://mummer.sourceforge.net/manual/#coords)
+
+- @Kurtz2004-ut
 
 ## `Quarto`
 
