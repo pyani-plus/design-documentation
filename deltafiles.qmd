@@ -80,8 +80,7 @@ B = .TCCGAC.GCAC$
 Here, `A` is the query and `B` is the reference. The corresponding `.delta` file would look like this:
 
 ```text
-A.fna
-B.fna
+A.fna B.fna
 NUCMER
 > A B 11 10 
 1 11 1 10 3 3 0
@@ -93,18 +92,18 @@ NUCMER
 
 We can obtain, or calculate, a number of values for this alignment.
 
-- query sequence length: 11
-- reference sequence length: 10
-- query alignment start base: 1
-- query alignment end base: 11
-  - query alignment length = 11 - 1 + 1 = 11
+- reference sequence length: 11
+- query sequence length: 10
 - reference alignment start base: 1
-- reference alignment end base: 10
-  - reference alignment length = 10 - 1 + 1 = 10
+- reference alignment end base: 11
+  - reference alignment length = 11 - 1 + 1 = 11
+- query alignment start base: 1
+- query alignment end base: 10
+  - query alignment length = 10 - 1 + 1 = 10
 - errors: 3
 - similarity errors: 3
-- insertions in the query: 1 (one negative value)
-- insertions in the reference: 2 (two positive values)
+- insertions in the reference: 1 (one negative value)
+- insertions in the query: 2 (two positive values)
 - total indel count: 3 (the count of nonzero numbers after the alignment header)
 
 But how long is the alignment? There are 12 positions in the alignment: 11 query bases plus a gap (insertion in the reference); or 10 reference bases plus two gaps (insertions in the query).
@@ -114,8 +113,8 @@ The length of the alignment is 12, and it is longer than either of the aligned s
 :::
 
 - total alignment length: 12
-  - query length plus insertions in the query: 11 + 1
-  - reference length plus insertions in the reference: 10 + 2
+  - reference length plus insertions in the reference: 11 + 1
+  - query length plus insertions in the query: 10 + 2
 
 
 From this alignment we can calculate the coverage for the query and the reference sequence, and the percentage identity for the match.
@@ -139,9 +138,305 @@ $$\textrm{query coverage} = 1 - \frac{\textrm{total alignment length - total ind
 $$\textrm{reference coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{reference length}}$$
 :::
 
-Which here gives us a **query coverage** of 9/11 ≈ 0.82, and a **reference coverage** of 9/12 = 0.75.
+Which here gives us a **reference coverage** of 9/11 ≈ 0.82, and a **query coverage** of 9/12 = 0.75.
 
 ## Overlapping alignments
 
 The approach in @sec-interpreting-alignments works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.
 
+::: { .callout-important }
+This problem arose in an [issue raised for an earlier `pyani` version](https://github.com/widdowquinn/pyani/issues/340). Here, Donovan Parks noted that `pyani` was returning a genome coverage value of greater than unity. This should not have happened, and the methodology described here is intended to avoid a recurrence.
+:::
+
+### A `.delta` file with overlaps
+
+The callout box below contains a MUMMer output `.delta` file, which results from a comparison between two virus sequences. There is a repeat in the genome which results in overlapping alignments, and previously gave a genome coverage of greater than unity.
+
+::: { .callout-note collapse="true" }
+## `.delta` file with overlapping alignments
+
+```
+donovan_test/AF_bug_v2/MGV-GENOME-0357962.fna donovan_test/AF_bug_v2/MGV-GENOME-0358017.fna
+NUCMER
+>MGV_MGV-GENOME-0357962 MGV_MGV-GENOME-0358017 87285 87353
+1 24024 63330 87353 5 5 0
+0
+23884 24176 1 293 0 0 0
+0
+24107 87285 176 63368 51 51 0
+-121
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-10416
+-1
+0
+```
+:::
+
+There are three alignments, overlapping on the query between bases 23884 to 24024, and bases 24107 to 24176.
+
+This extract of the `dnadiff.pl` output report summarises the issue:
+
+```text
+donovan_test/AF_bug_v2/MGV-GENOME-0357962.fna donovan_test/AF_bug_v2/MGV-GENOME-0358017.fna
+NUCMER
+
+                               [REF]                [QRY]
+[Sequences]
+TotalSeqs                          1                    1
+AlignedSeqs               1(100.00%)           1(100.00%)
+UnalignedSeqs               0(0.00%)             0(0.00%)
+
+[Bases]
+TotalBases                     87285                87353
+AlignedBases          87285(100.00%)       87353(100.00%)
+UnalignedBases              0(0.00%)             0(0.00%)
+
+[Alignments]
+1-to-1                             3                    3
+TotalLength                    87496                87510
+AvgLength                   29165.33             29170.00
+AvgIdentity                    99.94                99.94
+
+M-to-M                             3                    3
+TotalLength                    87496                87510
+AvgLength                   29165.33             29170.00
+AvgIdentity                    99.94                99.94
+```
+
+It notes that the query sequence length is 87353 bases, and the reference sequence length is 87275. However, the _alignment_ length runs for 87510 bases on the query, and 87496 bases on the reference sequence. The alignment is longer than either sequence participating in the alignment.
+
+The `dnadiff.pl` output reports **sequence identity** (`AvgIdentity`) and **sequence coverage** (`AlignedBases`, parenthetical) scores. Using the criteria and definitions we outlined above, we can calculate our own values from the `.delta` file:
+
+- query sequence length: 87353
+- reference sequence length: 87285
+- query alignment length: (24024 - 1 + 1) + (24176 - 23884 + 1) + (87285 - 24107 + 1) = 87496
+- reference alignment length: (87353 - 63330 + 1) + (293 - 1 + 1) + (63368 - 176 + 1) = 87510
+- errors: 51
+- similarity errors: 51
+- insertions in the reference: 14 (14 negative values)
+- insertions in the query: 0 (no positive values)
+- total indel count: 14 (the total count of nonzero numbers after the alignment header)
+- **total alignment length: ?????**
+  - **reference length plus insertions in the reference: 87285 + 14 = 87299**
+  - **query length plus insertions in the query: 87353 + 0 = 87353**
+
+This is in conflict with the `dnadiff.pl` output - the total alignment length doesn't seem to match. So where does `dnadiff.pl` get its `AlignedBases` count from?
+
+### `dnadiff.pl`'s `AlignedBases` count
+
+MUMmer's `dnadiff.pl` script effectively implements a workflow of several MUMmer tools:
+
+```bash
+$NUCMER --maxmatch -p $OPT_Prefix $OPT_RefFile $OPT_QryFile
+$DELTA_FILTER -1 $OPT_DeltaFile > $OPT_DeltaFile1
+$DELTA_FILTER -m $OPT_DeltaFile > $OPT_DeltaFileM
+$SHOW_COORDS -rclTH $OPT_DeltaFile1 > $OPT_CoordsFile1
+$SHOW_COORDS -rclTH $OPT_DeltaFileM > $OPT_CoordsFileM
+$SHOW_SNPS -rlTHC $OPT_DeltaFile1 > $OPT_SnpsFile
+$SHOW_DIFF -rH $OPT_DeltaFileM > $OPT_DiffRFile
+$SHOW_DIFF -qH $OPT_DeltaFileM > $OPT_DiffQFile
+```
+
+`dnadiff.pl` prefers the many-to-many (`M` indication) output for calculating most of its main statistics in the report. Ultimately, the values in `AlignedBases` are calculated and printed using the code below:
+
+```perl
+    printf $fho "%-15s %20s %20s\n",
+    "AlignedBases",
+    ( sprintf "%10d(%.4f%%)",
+      $rnABases, ($rnBases ? $rnABases / $rnBases * 100.0 : 0) ),
+    ( sprintf "%10d(%.4f%%)",
+      $qnABases, ($qnBases ? $qnABases / $qnBases * 100.0 : 0) );
+```
+
+Here, `rnBases` is the number of bases in the reference, and `rnABases` is the number of "aligned bases" from the reference participating in the alignment. `$rnABases` / `$rnBases` is the expected equation for calculating coverage. 
+
+The `rnABases` variable represents the sum of lengths of all aligned (reference) sequences, _minus_ the number of gaps indicated in the corresponding output for the reference sequence as determined in the `.rdiff` file generated by `show-diff` (called by `dnadiff.pl`) from the many-to-many `.delta` file.
+
+The documentation for `show-diff` states:
+
+> This program [`show-diff`] classifies alignment breakpoints for the quantification of macroscopic differences between two genomes. It takes a standard, unfiltered delta file as input, determines the best mapping between the two sequence sets, and reports on the breaks in that mapping.
+
+Although the documentation does not explicitly describe the algorithm, inspection of the source code suggests that `show-diff` considers a directed graph through all pairwise alignments between the genomes and aims to minimise the number of nodes (alignments) while maximising the coverage of the two genomes geing aligned. In this way it identifies a kind of _golden path_ through all possible ways of reconstructing the alignment, and reports structural differences (gaps, inversions, breakpoints, etc.) between the two aligned genomes on the basis of this.
+
+The way that `dnadiff.pl` calculates `rnABases` is to consider the `.mcoords` output from the `show-coords` tool, which summarises the content of the `.mdelta` file, with one row per alignment.  The `.mcoords` file used has a form similar to that below (though we add the header, here):
+
+```text
+[S1]	[E1]	[S2]	[E2]	[LEN 1]	[LEN 2]	[% IDY]	[LEN R]	[LEN Q]	[COV R]	[COV Q]	[TAGS]
+1	24024	63330	87353	24024	24024	99.98	87285	87353	27.52	27.50	MGV_MGV-GENOME-0357962	MGV_MGV-GENOME-0358017
+23884	24176	1	293	293	293	100.00	87285	87353	0.34	0.34	MGV_MGV-GENOME-0357962	MGV_MGV-GENOME-0358017
+24107	87285	176	63368	63179	63193	99.92	87285	87353	72.38	72.34	MGV_MGV-GENOME-0357962	MGV_MGV-GENOME-0358017
+```
+
+::: { .callout-note }
+The `.mcoords` file provides values for **sequence identity** and **sequence coverage**. There is a single percentage identity value for each alignment, but a separate coverage measure for query and reference.
+
+The identity figure appears to be calculated using the number of _similarity errors_. From the corresponding `.delta` file, the third alignment has 51 similarity errors, with 14 insertions. Taking `LEN 1` and `LEN 2` to be the number of aligned bases for reference and query, respectively, then 99.92% of 63179 is 51, and of 63193 is also 51. **We can conclude that `show-coords` calculates alignment identity using the number of similarity errors.**
+
+Similarly, the query and reference coverage appear to be calculated as (aligned bases)/(sequence length); and the number of aligned bases in `LEN 1` and `LEN 2` is just the length of the aligned sequence.
+:::
+
+The total alignment length is incremented as the variable `$rnABases` (previously initialised as zero) in the code below, as we iterate over the `.mcoords` file.
+
+```perl
+#-- If new ID, add to sequence and base count
+if ( $refs{$A[11]} > 0 ) {
+    $rnASeqs++;
+    $rnABases += $refs{$A[11]};
+    $refs{$A[11]} *= -1; # If ref has alignment, length will be -neg
+}
+```
+
+The variable `$refs[$A[11]]` represents the length of the FASTA sequence associated with the sequence ID in column 11 of the `.mcoords` table - i.e. the complete length of that sequence.
+
+This is then modified later in the code by removing all of the `GAP` regions determined by `show-diff`: regions where the sequence does not align in the "golden path." The `.rdiff` file has this form:
+
+```text
+MGV_MGV-GENOME-0357962	JMP	24025	23883	-141
+MGV_MGV-GENOME-0357962	GAP	24177	24106	-70	-118	48
+```
+
+and is iterated over, storing column 4 in `$gap` for each line - this is used to modify the count of aligned bases:
+
+```perl
+#-- Remove unaligned sequence from count
+if ( $A[1] ne "DUP" ) {
+  $rnABases -= $gap if ( $gap > 0 );
+}
+```
+
+So, for the `.rdiff` file above, all elements in column 4 are negative, and no modification would occur.
+
+### A second example
+
+In this example, there is an 84bp unaligned region at the start of the reference, and about a 2kb overlap between the two aligned regions.
+
+::: { .callout-note collapse="true"}
+## `.mdelta` file
+
+```text
+high_align_cov/MGV-GENOME-0264574.fna high_align_cov/MGV-GENOME-0266457.fna
+NUCMER
+>MGV_MGV-GENOME-0264574 MGV_MGV-GENOME-0266457 39253 39594
+85 37713 1 37636 215 215 0
+-3013
+-24624
+-1
+-1
+-1
+-1
+-1
+0
+17709 39253 17626 39176 7 7 0
+-9994
+-1
+-1
+-1
+-1
+-1
+0
+```
+:::
+
+::: { .callout-note collapse="true"}
+## `.mcoords` file
+```text
+85	37713	1	37636	37629	37636	99.43	39253	39594	95.86	95.05	MGV_MGV-GENOME-0264574	MGV_MGV-GENOME-0266457
+17709	39253	17626	39176	21545	21551	99.97	39253	39594	54.89	54.43	MGV_MGV-GENOME-0264574	MGV_MGV-GENOME-0266457
+```
+:::
+
+::: { .callout-note collapse="true"}
+## `.rdiff` file
+```text
+MGV_MGV-GENOME-0264574	BRK	1	84	84
+MGV_MGV-GENOME-0264574	GAP	37714	17708	-20005	-20011	6
+```
+:::
+
+::: { .callout-note collapse="true"}
+## `.qdiff` file
+```text
+MGV_MGV-GENOME-0266457	GAP	37637	17625	-20011	-20005	-6
+MGV_MGV-GENOME-0266457	BRK	39177	39594	418
+```
+:::
+
+::: { .callout-note collapse="true"}
+## `.report` file extract
+```text
+                               [REF]                [QRY]
+[Sequences]
+TotalSeqs                          1                    1
+AlignedSeqs               1(100.00%)           1(100.00%)
+UnalignedSeqs               0(0.00%)             0(0.00%)
+
+[Bases]
+TotalBases                     39253                39594
+AlignedBases           39169(99.79%)        39176(98.94%)
+UnalignedBases             84(0.21%)           418(1.06%)
+
+[Alignments]
+1-to-1                             2                    2
+TotalLength                    59174                59187
+AvgLength                   29587.00             29593.50
+AvgIdentity                    99.63                99.63
+
+M-to-M                             2                    2
+TotalLength                    59174                59187
+AvgLength                   29587.00             29593.50
+AvgIdentity                    99.63                99.63
+```
+:::
+
+So, to replicate the output of `dnadiff.pl` we can use the contents of MUMmer output as follows:
+
+- `.delta`/`.mdelta`
+  - reference sequence length: 39253 (`$rnBases`)
+  - query sequence length: 39594 (`$qnBases`)
+  - the identifiers for every query/reference fragment that was aligned, giving
+    - aligned reference bases (uncorrected): 39253
+    - aligned query bases (uncorrected): 39594
+- `.rdiff`
+  - number of reference sequence gaps: 84
+  - allowing correction:
+    - aligned reference bases: 39253 - 84 = 39169 (`$rnABases`)
+- `.qdiff`
+  - number of query sequence gaps: 418
+  - allowing correction:
+    - aligned query bases: 39594 - 418 = 39176 (`$rnABases`)
+
+::: { .callout-important }
+This allows calculation of reference and query coverage as 39169 / 39253 = 0.9979 and 39176 / 39594 = 0.9894, respectively.
+:::
+
+We can calculate the `AvgIdentity` values from the `.mdelta` file alone. For each alignment, we calculate the number of aligned bases from each sequence (using the file above), e.g.:
+
+- aligned reference bases: 37713 - 85 + 1 = 37629
+- aligned query bases: 37636 - 1 + 1 = 37636
+- similarity errors: 215
+- percentage identity = 1 - (2 * 215 / (37629 + 37636)) = 0.99429
+
+to get the percentage identity for a single alignment. To find an average across all alignments we might think we need to multiply through by the alignment length sum, as follows:
+
+- alignment 1 identity weighted = (1 - (2 * 215 / (37629 + 37636))) * (37629 + 37636) = 74835.0
+- alignment 2 identity weighted = (1 - (2 * 7 / (21545 + 21551))) * (21545 + 21551) = 43082.0
+- sum of alignment lengths = 37629 + 37636 + 21545 + 21551 = 118361
+- average identity = (74835 + 43082) / 118361 = 0.99625
+
+But a quicker way to calculate this would be to skip the intermediate calculation of identity, as follows:
+
+- alignment 1 identity weighted = (37629 + 37636) - (2 * 215) = 74835
+- alignment 2 identity weighted = (21545 + 21551) - (2 * 7) = 43082
+- average identity = (74835 + 43082) / (37629 + 37636 + 21545 + 21551) = 0.99625
+
+And we would only need to keep a running tally of the sum of weighted identical bases, and the sum of aligned bases from each fragment at each step. This could be quite fast.
