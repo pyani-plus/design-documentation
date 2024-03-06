@@ -142,7 +142,40 @@
     "href": "sqlite.html",
     "title": "4  SQLite3",
     "section": "",
-    "text": "This chapter describes our general approach to using sqlite3 for pyani-plus application data storage.\n\naiosqlite: library for asynchronous access to sqlite3",
+    "text": "4.1 Overview\nWe have used sqlite3 for persistent storage of analysis results in previous versions of pyani, and we will continue to do so.\nThe main issue we have faced is performance. In previous versions of pyani there was a single operation to populate the results database serially with output from each analysis. This was a detriment to performance, as it required\nNeeding to wait for all comparisons to complete, especially for large analyses, sometimes left “dead time” on the server where most cores were not conducting comparisons, but no database population was taking place. This time could have been used more efficiently.\nThe need to populate the database serially did not take advantage of sqlite’s ability to manage concurrent connections.",
+    "crumbs": [
+      "Job Distribution",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SQLite3</span>"
+    ]
+  },
+  {
+    "objectID": "sqlite.html#overview",
+    "href": "sqlite.html#overview",
+    "title": "4  SQLite3",
+    "section": "",
+    "text": "all comparisons to complete before the database was populated\neach comparison to be added in turn\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nThe behaviour we would like is that, immediately after each analysis is concluded, the result is added to the sqlite3 database, removing the need to wait for all analyses to conclude.",
+    "crumbs": [
+      "Job Distribution",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SQLite3</span>"
+    ]
+  },
+  {
+    "objectID": "sqlite.html#proposal",
+    "href": "sqlite.html#proposal",
+    "title": "4  SQLite3",
+    "section": "4.2 Proposal",
+    "text": "4.2 Proposal\nWhen we run a pairwise comparison, we carry out the comparison using a wrapper script that conducts the comparison, and then populates the database, e.g. \n#!/usr/bin/env bash\n\nrun_comparison sequence_A sequence_B -o output.tab  # run pairwise comparison\npopulate_db dbpath output.tab  # populate sqlite database with data from the output file",
+    "crumbs": [
+      "Job Distribution",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SQLite3</span>"
+    ]
+  },
+  {
+    "objectID": "sqlite.html#test-implementation",
+    "href": "sqlite.html#test-implementation",
+    "title": "4  SQLite3",
+    "section": "4.3 Test implementation",
+    "text": "4.3 Test implementation\nA test implementation is available under examples/sqlite/concurrency.",
     "crumbs": [
       "Job Distribution",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>SQLite3</span>"
@@ -225,6 +258,16 @@
     "title": "Resources",
     "section": "R/RStudio",
     "text": "R/RStudio\n\nRStudio Desktop: https://posit.co/download/rstudio-desktop/",
+    "crumbs": [
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "resources.html#sqlite3",
+    "href": "resources.html#sqlite3",
+    "title": "Resources",
+    "section": "SQLite3",
+    "text": "SQLite3\n\naiosqlite: library for asynchronous access to sqlite3\nPython sqlite3 module: https://docs.python.org/3/library/sqlite3.html\n\nThreadsafety in the sqlite3 module: https://docs.python.org/3/library/sqlite3.html#sqlite3.threadsafety\n\nThreadsafe modes with sqlite3: https://www.sqlite.org/threadsafe.html",
     "crumbs": [
       "Resources"
     ]
