@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -254,7 +288,12 @@ window.Quarto = {
   <li><a href="#percentage-identity" id="toc-percentage-identity" class="nav-link" data-scroll-target="#percentage-identity"><span class="header-section-number">6.2.1</span> Percentage identity</a></li>
   <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage"><span class="header-section-number">6.2.2</span> Coverage</a></li>
   </ul></li>
-  <li><a href="#overlapping-alignments" id="toc-overlapping-alignments" class="nav-link" data-scroll-target="#overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</a></li>
+  <li><a href="#overlapping-alignments" id="toc-overlapping-alignments" class="nav-link" data-scroll-target="#overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</a>
+  <ul class="collapse">
+  <li><a href="#a-.delta-file-with-overlaps" id="toc-a-.delta-file-with-overlaps" class="nav-link" data-scroll-target="#a-.delta-file-with-overlaps"><span class="header-section-number">6.3.1</span> A <code>.delta</code> file with overlaps</a></li>
+  <li><a href="#dnadiff.pls-alignedbases-count" id="toc-dnadiff.pls-alignedbases-count" class="nav-link" data-scroll-target="#dnadiff.pls-alignedbases-count"><span class="header-section-number">6.3.2</span> <code>dnadiff.pl</code>’s <code>AlignedBases</code> count</a></li>
+  <li><a href="#a-second-example" id="toc-a-second-example" class="nav-link" data-scroll-target="#a-second-example"><span class="header-section-number">6.3.3</span> A second example</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/deltafiles.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -347,8 +386,7 @@ Delta = (1, -3, 4, 0)
 A = ATC.GACTGCAC$
 B = .TCCGAC.GCAC$</code></pre>
 <p>Here, <code>A</code> is the query and <code>B</code> is the reference. The corresponding <code>.delta</code> file would look like this:</p>
-<pre class="text"><code>A.fna
-B.fna
+<pre class="text"><code>A.fna B.fna
 NUCMER
 &gt; A B 11 10 
 1 11 1 10 3 3 0
@@ -358,22 +396,22 @@ NUCMER
 0</code></pre>
 <p>We can obtain, or calculate, a number of values for this alignment.</p>
 <ul>
-<li>query sequence length: 11</li>
-<li>reference sequence length: 10</li>
-<li>query alignment start base: 1</li>
-<li>query alignment end base: 11
-<ul>
-<li>query alignment length = 11 - 1 + 1 = 11</li>
-</ul></li>
+<li>reference sequence length: 11</li>
+<li>query sequence length: 10</li>
 <li>reference alignment start base: 1</li>
-<li>reference alignment end base: 10
+<li>reference alignment end base: 11
 <ul>
-<li>reference alignment length = 10 - 1 + 1 = 10</li>
+<li>reference alignment length = 11 - 1 + 1 = 11</li>
+</ul></li>
+<li>query alignment start base: 1</li>
+<li>query alignment end base: 10
+<ul>
+<li>query alignment length = 10 - 1 + 1 = 10</li>
 </ul></li>
 <li>errors: 3</li>
 <li>similarity errors: 3</li>
-<li>insertions in the query: 1 (one negative value)</li>
-<li>insertions in the reference: 2 (two positive values)</li>
+<li>insertions in the reference: 1 (one negative value)</li>
+<li>insertions in the query: 2 (two positive values)</li>
 <li>total indel count: 3 (the count of nonzero numbers after the alignment header)</li>
 </ul>
 <p>But how long is the alignment? There are 12 positions in the alignment: 11 query bases plus a gap (insertion in the reference); or 10 reference bases plus two gaps (insertions in the query).</p>
@@ -393,8 +431,8 @@ Important
 <ul>
 <li>total alignment length: 12
 <ul>
-<li>query length plus insertions in the query: 11 + 1</li>
-<li>reference length plus insertions in the reference: 10 + 2</li>
+<li>reference length plus insertions in the reference: 11 + 1</li>
+<li>query length plus insertions in the query: 10 + 2</li>
 </ul></li>
 </ul>
 <p>From this alignment we can calculate the coverage for the query and the reference sequence, and the percentage identity for the match.</p>
@@ -432,14 +470,366 @@ Percentage identity calculation
 <p><span class="math display">\[\textrm{query coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{query length}}\]</span> <span class="math display">\[\textrm{reference coverage} = 1 - \frac{\textrm{total alignment length - total indel count}}{\textrm{reference length}}\]</span></p>
 </div>
 </div>
-<p>Which here gives us a <strong>query coverage</strong> of 9/11 ≈ 0.82, and a <strong>reference coverage</strong> of 9/12 = 0.75.</p>
+<p>Which here gives us a <strong>reference coverage</strong> of 9/11 ≈ 0.82, and a <strong>query coverage</strong> of 9/12 = 0.75.</p>
 </section>
 </section>
 <section id="overlapping-alignments" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</h2>
 <p>The approach in <a href="#sec-interpreting-alignments" class="quarto-xref"><span>Section 6.2</span></a> works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This problem arose in an <a href="https://github.com/widdowquinn/pyani/issues/340">issue raised for an earlier <code>pyani</code> version</a>. Here, Donovan Parks noted that <code>pyani</code> was returning a genome coverage value of greater than unity. This should not have happened, and the methodology described here is intended to avoid a recurrence.</p>
+</div>
+</div>
+<section id="a-.delta-file-with-overlaps" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="a-.delta-file-with-overlaps"><span class="header-section-number">6.3.1</span> A <code>.delta</code> file with overlaps</h3>
+<p>The callout box below contains a MUMMer output <code>.delta</code> file, which results from a comparison between two virus sequences. There is a repeat in the genome which results in overlapping alignments, and previously gave a genome coverage of greater than unity.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>.delta</code> file with overlapping alignments
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>donovan_test/AF_bug_v2/MGV-GENOME-0357962.fna donovan_test/AF_bug_v2/MGV-GENOME-0358017.fna
+NUCMER
+&gt;MGV_MGV-GENOME-0357962 MGV_MGV-GENOME-0358017 87285 87353
+1 24024 63330 87353 5 5 0
+0
+23884 24176 1 293 0 0 0
+0
+24107 87285 176 63368 51 51 0
+-121
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-1
+-10416
+-1
+0</code></pre>
+</div>
+</div>
+</div>
+<p>There are three alignments, overlapping on the query between bases 23884 to 24024, and bases 24107 to 24176.</p>
+<p>This extract of the <code>dnadiff.pl</code> output report summarises the issue:</p>
+<pre class="text"><code>donovan_test/AF_bug_v2/MGV-GENOME-0357962.fna donovan_test/AF_bug_v2/MGV-GENOME-0358017.fna
+NUCMER
+
+                               [REF]                [QRY]
+[Sequences]
+TotalSeqs                          1                    1
+AlignedSeqs               1(100.00%)           1(100.00%)
+UnalignedSeqs               0(0.00%)             0(0.00%)
+
+[Bases]
+TotalBases                     87285                87353
+AlignedBases          87285(100.00%)       87353(100.00%)
+UnalignedBases              0(0.00%)             0(0.00%)
+
+[Alignments]
+1-to-1                             3                    3
+TotalLength                    87496                87510
+AvgLength                   29165.33             29170.00
+AvgIdentity                    99.94                99.94
+
+M-to-M                             3                    3
+TotalLength                    87496                87510
+AvgLength                   29165.33             29170.00
+AvgIdentity                    99.94                99.94</code></pre>
+<p>It notes that the query sequence length is 87353 bases, and the reference sequence length is 87275. However, the <em>alignment</em> length runs for 87510 bases on the query, and 87496 bases on the reference sequence. The alignment is longer than either sequence participating in the alignment.</p>
+<p>The <code>dnadiff.pl</code> output reports <strong>sequence identity</strong> (<code>AvgIdentity</code>) and <strong>sequence coverage</strong> (<code>AlignedBases</code>, parenthetical) scores. Using the criteria and definitions we outlined above, we can calculate our own values from the <code>.delta</code> file:</p>
+<ul>
+<li>query sequence length: 87353</li>
+<li>reference sequence length: 87285</li>
+<li>query alignment length: (24024 - 1 + 1) + (24176 - 23884 + 1) + (87285 - 24107 + 1) = 87496</li>
+<li>reference alignment length: (87353 - 63330 + 1) + (293 - 1 + 1) + (63368 - 176 + 1) = 87510</li>
+<li>errors: 51</li>
+<li>similarity errors: 51</li>
+<li>insertions in the reference: 14 (14 negative values)</li>
+<li>insertions in the query: 0 (no positive values)</li>
+<li>total indel count: 14 (the total count of nonzero numbers after the alignment header)</li>
+<li><strong>total alignment length: ?????</strong>
+<ul>
+<li><strong>reference length plus insertions in the reference: 87285 + 14 = 87299</strong></li>
+<li><strong>query length plus insertions in the query: 87353 + 0 = 87353</strong></li>
+</ul></li>
+</ul>
+<p>This is in conflict with the <code>dnadiff.pl</code> output - the total alignment length doesn’t seem to match. So where does <code>dnadiff.pl</code> get its <code>AlignedBases</code> count from?</p>
+</section>
+<section id="dnadiff.pls-alignedbases-count" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="dnadiff.pls-alignedbases-count"><span class="header-section-number">6.3.2</span> <code>dnadiff.pl</code>’s <code>AlignedBases</code> count</h3>
+<p>MUMmer’s <code>dnadiff.pl</code> script effectively implements a workflow of several MUMmer tools:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$NUCMER</span> <span class="at">--maxmatch</span> <span class="at">-p</span> <span class="va">$OPT_Prefix</span> <span class="va">$OPT_RefFile</span> <span class="va">$OPT_QryFile</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">$DELTA_FILTER</span> <span class="at">-1</span> <span class="va">$OPT_DeltaFile</span> <span class="op">&gt;</span> <span class="va">$OPT_DeltaFile1</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">$DELTA_FILTER</span> <span class="at">-m</span> <span class="va">$OPT_DeltaFile</span> <span class="op">&gt;</span> <span class="va">$OPT_DeltaFileM</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">$SHOW_COORDS</span> <span class="at">-rclTH</span> <span class="va">$OPT_DeltaFile1</span> <span class="op">&gt;</span> <span class="va">$OPT_CoordsFile1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">$SHOW_COORDS</span> <span class="at">-rclTH</span> <span class="va">$OPT_DeltaFileM</span> <span class="op">&gt;</span> <span class="va">$OPT_CoordsFileM</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="va">$SHOW_SNPS</span> <span class="at">-rlTHC</span> <span class="va">$OPT_DeltaFile1</span> <span class="op">&gt;</span> <span class="va">$OPT_SnpsFile</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="va">$SHOW_DIFF</span> <span class="at">-rH</span> <span class="va">$OPT_DeltaFileM</span> <span class="op">&gt;</span> <span class="va">$OPT_DiffRFile</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="va">$SHOW_DIFF</span> <span class="at">-qH</span> <span class="va">$OPT_DeltaFileM</span> <span class="op">&gt;</span> <span class="va">$OPT_DiffQFile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>dnadiff.pl</code> prefers the many-to-many (<code>M</code> indication) output for calculating most of its main statistics in the report. Ultimately, the values in <code>AlignedBases</code> are calculated and printed using the code below:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode perl code-with-copy"><code class="sourceCode perl"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>    <span class="fu">printf</span> <span class="dt">$fho</span> <span class="ot">"</span><span class="wa">%-</span><span class="dt">15s</span><span class="st"> </span><span class="dt">%20s</span><span class="st"> </span><span class="dt">%20s</span><span class="ch">\n</span><span class="ot">"</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">"</span><span class="st">AlignedBases</span><span class="ot">"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    ( <span class="fu">sprintf</span> <span class="ot">"</span><span class="dt">%10d</span><span class="st">(%.4f%%)</span><span class="ot">"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">$rnABases</span>, (<span class="dt">$rnBases</span> ? <span class="dt">$rnABases</span> / <span class="dt">$rnBases</span> <span class="ot">*</span> <span class="fl">100.0</span> : <span class="dv">0</span>) ),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    ( <span class="fu">sprintf</span> <span class="ot">"</span><span class="dt">%10d</span><span class="st">(%.4f%%)</span><span class="ot">"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">$qnABases</span>, (<span class="dt">$qnBases</span> ? <span class="dt">$qnABases</span> / <span class="dt">$qnBases</span> <span class="ot">*</span> <span class="fl">100.0</span> : <span class="dv">0</span>) );</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, <code>rnBases</code> is the number of bases in the reference, and <code>rnABases</code> is the number of “aligned bases” from the reference participating in the alignment. <code>$rnABases</code> / <code>$rnBases</code> is the expected equation for calculating coverage.</p>
+<p>The <code>rnABases</code> variable represents the sum of lengths of all aligned (reference) sequences, <em>minus</em> the number of gaps indicated in the corresponding output for the reference sequence as determined in the <code>.rdiff</code> file generated by <code>show-diff</code> (called by <code>dnadiff.pl</code>) from the many-to-many <code>.delta</code> file.</p>
+<p>The documentation for <code>show-diff</code> states:</p>
+<blockquote class="blockquote">
+<p>This program [<code>show-diff</code>] classifies alignment breakpoints for the quantification of macroscopic differences between two genomes. It takes a standard, unfiltered delta file as input, determines the best mapping between the two sequence sets, and reports on the breaks in that mapping.</p>
+</blockquote>
+<p>Although the documentation does not explicitly describe the algorithm, inspection of the source code suggests that <code>show-diff</code> considers a directed graph through all pairwise alignments between the genomes and aims to minimise the number of nodes (alignments) while maximising the coverage of the two genomes geing aligned. In this way it identifies a kind of <em>golden path</em> through all possible ways of reconstructing the alignment, and reports structural differences (gaps, inversions, breakpoints, etc.) between the two aligned genomes on the basis of this.</p>
+<p>The way that <code>dnadiff.pl</code> calculates <code>rnABases</code> is to consider the <code>.mcoords</code> output from the <code>show-coords</code> tool, which summarises the content of the <code>.mdelta</code> file, with one row per alignment. The <code>.mcoords</code> file used has a form similar to that below (though we add the header, here):</p>
+<pre class="text"><code>[S1]    [E1]    [S2]    [E2]    [LEN 1] [LEN 2] [% IDY] [LEN R] [LEN Q] [COV R] [COV Q] [TAGS]
+1   24024   63330   87353   24024   24024   99.98   87285   87353   27.52   27.50   MGV_MGV-GENOME-0357962  MGV_MGV-GENOME-0358017
+23884   24176   1   293 293 293 100.00  87285   87353   0.34    0.34    MGV_MGV-GENOME-0357962  MGV_MGV-GENOME-0358017
+24107   87285   176 63368   63179   63193   99.92   87285   87353   72.38   72.34   MGV_MGV-GENOME-0357962  MGV_MGV-GENOME-0358017</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>.mcoords</code> file provides values for <strong>sequence identity</strong> and <strong>sequence coverage</strong>. There is a single percentage identity value for each alignment, but a separate coverage measure for query and reference.</p>
+<p>The identity figure appears to be calculated using the number of <em>similarity errors</em>. From the corresponding <code>.delta</code> file, the third alignment has 51 similarity errors, with 14 insertions. Taking <code>LEN 1</code> and <code>LEN 2</code> to be the number of aligned bases for reference and query, respectively, then 99.92% of 63179 is 51, and of 63193 is also 51. <strong>We can conclude that <code>show-coords</code> calculates alignment identity using the number of similarity errors.</strong></p>
+<p>Similarly, the query and reference coverage appear to be calculated as (aligned bases)/(sequence length); and the number of aligned bases in <code>LEN 1</code> and <code>LEN 2</code> is just the length of the aligned sequence.</p>
+</div>
+</div>
+<p>The total alignment length is incremented as the variable <code>$rnABases</code> (previously initialised as zero) in the code below, as we iterate over the <code>.mcoords</code> file.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode perl code-with-copy"><code class="sourceCode perl"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-- If new ID, add to sequence and base count</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> ( <span class="dt">$refs</span>{<span class="dt">$A</span>[<span class="dv">11</span>]} &gt; <span class="dv">0</span> ) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$rnASeqs</span>++;</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$rnABases</span> += <span class="dt">$refs</span>{<span class="dt">$A</span>[<span class="dv">11</span>]};</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">$refs</span>{<span class="dt">$A</span>[<span class="dv">11</span>]} *= -<span class="dv">1</span>; <span class="co"># If ref has alignment, length will be -neg</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The variable <code>$refs[$A[11]]</code> represents the length of the FASTA sequence associated with the sequence ID in column 11 of the <code>.mcoords</code> table - i.e.&nbsp;the complete length of that sequence.</p>
+<p>This is then modified later in the code by removing all of the <code>GAP</code> regions determined by <code>show-diff</code>: regions where the sequence does not align in the “golden path.” The <code>.rdiff</code> file has this form:</p>
+<pre class="text"><code>MGV_MGV-GENOME-0357962  JMP 24025   23883   -141
+MGV_MGV-GENOME-0357962  GAP 24177   24106   -70 -118    48</code></pre>
+<p>and is iterated over, storing column 4 in <code>$gap</code> for each line - this is used to modify the count of aligned bases:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode perl code-with-copy"><code class="sourceCode perl"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Remove unaligned sequence from count</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> ( <span class="dt">$A</span>[<span class="dv">1</span>] <span class="ot">ne</span> <span class="ot">"</span><span class="st">DUP</span><span class="ot">"</span> ) {</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">$rnABases</span> -= <span class="dt">$gap</span> <span class="kw">if</span> ( <span class="dt">$gap</span> &gt; <span class="dv">0</span> );</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So, for the <code>.rdiff</code> file above, all elements in column 4 are negative, and no modification would occur.</p>
+</section>
+<section id="a-second-example" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="a-second-example"><span class="header-section-number">6.3.3</span> A second example</h3>
+<p>In this example, there is an 84bp unaligned region at the start of the reference, and about a 2kb overlap between the two aligned regions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>.mdelta</code> file
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="text"><code>high_align_cov/MGV-GENOME-0264574.fna high_align_cov/MGV-GENOME-0266457.fna
+NUCMER
+&gt;MGV_MGV-GENOME-0264574 MGV_MGV-GENOME-0266457 39253 39594
+85 37713 1 37636 215 215 0
+-3013
+-24624
+-1
+-1
+-1
+-1
+-1
+0
+17709 39253 17626 39176 7 7 0
+-9994
+-1
+-1
+-1
+-1
+-1
+0</code></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>.mcoords</code> file
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="text"><code>85  37713   1   37636   37629   37636   99.43   39253   39594   95.86   95.05   MGV_MGV-GENOME-0264574  MGV_MGV-GENOME-0266457
+17709   39253   17626   39176   21545   21551   99.97   39253   39594   54.89   54.43   MGV_MGV-GENOME-0264574  MGV_MGV-GENOME-0266457</code></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>.rdiff</code> file
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="text"><code>MGV_MGV-GENOME-0264574  BRK 1   84  84
+MGV_MGV-GENOME-0264574  GAP 37714   17708   -20005  -20011  6</code></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>.qdiff</code> file
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="text"><code>MGV_MGV-GENOME-0266457  GAP 37637   17625   -20011  -20005  -6
+MGV_MGV-GENOME-0266457  BRK 39177   39594   418</code></pre>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>.report</code> file extract
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre class="text"><code>                               [REF]                [QRY]
+[Sequences]
+TotalSeqs                          1                    1
+AlignedSeqs               1(100.00%)           1(100.00%)
+UnalignedSeqs               0(0.00%)             0(0.00%)
+
+[Bases]
+TotalBases                     39253                39594
+AlignedBases           39169(99.79%)        39176(98.94%)
+UnalignedBases             84(0.21%)           418(1.06%)
+
+[Alignments]
+1-to-1                             2                    2
+TotalLength                    59174                59187
+AvgLength                   29587.00             29593.50
+AvgIdentity                    99.63                99.63
+
+M-to-M                             2                    2
+TotalLength                    59174                59187
+AvgLength                   29587.00             29593.50
+AvgIdentity                    99.63                99.63</code></pre>
+</div>
+</div>
+</div>
+<p>So, to replicate the output of <code>dnadiff.pl</code> we can use the contents of MUMmer output as follows:</p>
+<ul>
+<li><code>.delta</code>/<code>.mdelta</code>
+<ul>
+<li>reference sequence length: 39253 (<code>$rnBases</code>)</li>
+<li>query sequence length: 39594 (<code>$qnBases</code>)</li>
+<li>the identifiers for every query/reference fragment that was aligned, giving
+<ul>
+<li>aligned reference bases (uncorrected): 39253</li>
+<li>aligned query bases (uncorrected): 39594</li>
+</ul></li>
+</ul></li>
+<li><code>.rdiff</code>
+<ul>
+<li>number of reference sequence gaps: 84</li>
+<li>allowing correction:
+<ul>
+<li>aligned reference bases: 39253 - 84 = 39169 (<code>$rnABases</code>)</li>
+</ul></li>
+</ul></li>
+<li><code>.qdiff</code>
+<ul>
+<li>number of query sequence gaps: 418</li>
+<li>allowing correction:
+<ul>
+<li>aligned query bases: 39594 - 418 = 39176 (<code>$rnABases</code>)</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This allows calculation of reference and query coverage as 39169 / 39253 = 0.9979 and 39176 / 39594 = 0.9894, respectively.</p>
+</div>
+</div>
+<p>We can calculate the <code>AvgIdentity</code> values from the <code>.mdelta</code> file alone. For each alignment, we calculate the number of aligned bases from each sequence (using the file above), e.g.:</p>
+<ul>
+<li>aligned reference bases: 37713 - 85 + 1 = 37629</li>
+<li>aligned query bases: 37636 - 1 + 1 = 37636</li>
+<li>similarity errors: 215</li>
+<li>percentage identity = 1 - (2 * 215 / (37629 + 37636)) = 0.99429</li>
+</ul>
+<p>to get the percentage identity for a single alignment. To find an average across all alignments we might think we need to multiply through by the alignment length sum, as follows:</p>
+<ul>
+<li>alignment 1 identity weighted = (1 - (2 * 215 / (37629 + 37636))) * (37629 + 37636) = 74835.0</li>
+<li>alignment 2 identity weighted = (1 - (2 * 7 / (21545 + 21551))) * (21545 + 21551) = 43082.0</li>
+<li>sum of alignment lengths = 37629 + 37636 + 21545 + 21551 = 118361</li>
+<li>average identity = (74835 + 43082) / 118361 = 0.99625</li>
+</ul>
+<p>But a quicker way to calculate this would be to skip the intermediate calculation of identity, as follows:</p>
+<ul>
+<li>alignment 1 identity weighted = (37629 + 37636) - (2 * 215) = 74835</li>
+<li>alignment 2 identity weighted = (21545 + 21551) - (2 * 7) = 43082</li>
+<li>average identity = (74835 + 43082) / (37629 + 37636 + 21545 + 21551) = 0.99625</li>
+</ul>
+<p>And we would only need to keep a running tally of the sum of weighted identical bases, and the sum of aligned bases from each fragment at each step. This could be quite fast.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
