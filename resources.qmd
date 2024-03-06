@@ -21,6 +21,14 @@
 
 - `RStudio` Desktop: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
+## `SQLite3`
+
+- [`aiosqlite`](https://github.com/omnilib/aiosqlite): library for asynchronous access to `sqlite3`
+- Python `sqlite3` module: [https://docs.python.org/3/library/sqlite3.html](https://docs.python.org/3/library/sqlite3.html)
+  - Threadsafety in the `sqlite3` module: [https://docs.python.org/3/library/sqlite3.html#sqlite3.threadsafety](https://docs.python.org/3/library/sqlite3.html#sqlite3.threadsafety)
+- Threadsafe modes with `sqlite3`: [https://www.sqlite.org/threadsafe.html](https://www.sqlite.org/threadsafe.html)
+
+
 ## `Visual Studio Code`
 
 - `Visual Studio Code`: [https://code.visualstudio.com/](https://code.visualstudio.com/)

@@ -2,4 +2,34 @@
 
 This chapter describes our general approach to using `sqlite3` for `pyani-plus` application data storage.
 
-- [`aiosqlite`](https://github.com/omnilib/aiosqlite): library for asynchronous access to `sqlite3`
+## Overview
+
+We have used `sqlite3` for persistent storage of analysis results in previous versions of `pyani`, and we will continue to do so.
+
+The main issue we have faced is performance. In previous versions of `pyani` there was a single operation to populate the results database serially with output from each analysis. This was a detriment to performance, as it required
+
+1. all comparisons to complete before the database was populated
+2. each comparison to be added in turn
+
+Needing to wait for all comparisons to complete, especially for large analyses, sometimes left "dead time" on the server where most cores were not conducting comparisons, but no database population was taking place. This time could have been used more efficiently.
+
+The need to populate the database serially did not take advantage of `sqlite`'s ability to manage concurrent connections. 
+
+::: { .callout-important }
+The behaviour we would like is that, immediately after each analysis is concluded, the result is added to the `sqlite3` database, removing the need to wait for all analyses to conclude.
+:::
+
+## Proposal
+
+When we run a pairwise comparison, we carry out the comparison using a wrapper script that conducts the comparison, and then populates the database, e.g. 
+
+```bash
+#!/usr/bin/env bash
+
+run_comparison sequence_A sequence_B -o output.tab  # run pairwise comparison
+populate_db dbpath output.tab  # populate sqlite database with data from the output file
+```
+
+## Test implementation
+
+A test implementation is available under `examples/sqlite/concurrency`.
