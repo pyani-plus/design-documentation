@@ -1,6 +1,6 @@
 # Recording Contributions
 
-We aim to record all contributions to `pyani-pure` in line with the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
+We aim to record all contributions to `pyani-plus` in line with the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
 
 ## Using All Contributors
 

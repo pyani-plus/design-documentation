@@ -77,7 +77,7 @@ A = ATC.GACTGCAC$
 B = .TCCGAC.GCAC$
 ```
 
-Here, `A` is the query and `B` is the reference. The corresponding `.delta` file would look like this:
+Here, `A` is the reference and `B` is the query. The corresponding `.delta` file would look like this:
 
 ```text
 A.fna B.fna
