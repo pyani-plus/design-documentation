@@ -10,7 +10,101 @@ This chapter describes how we can use `snakemake` to make scheduling comparison 
 
 ### Snakemake distributes jobs
 
+A major hassle with the older versions of `pyani` was keeping on top of cluster scheduler changes. `snakemake` has plugins for cluster and cloud operation, so it should be possible for us to ride on top of that and maintain a single interface to `snakemake` to handle our job dependencies and distribution.
+
 - [Cluster/cloud execution documentation](https://snakemake.readthedocs.io/en/stable/tutorial/additional_features.html#cluster-or-cloud-execution)
 - [SLURM executor plugin documentation](https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/slurm.html)
 
-## Using `snakemake` with a
+## Using the `snakemake` CLI
+
+With the CLI we call `snakemake` and pass it the path to the snakefile (which defines and configures the workflow), the number of cores, and any other arguments. The snakefile An example is given below.
+
+```python
+# Example snakemake file performing pairwise comparisons
+from itertools import permutations
+
+# Pick up genome filestems
+(GENOMES,) = glob_wildcards("data/{genome}.fna")
+CMPS = list(permutations(GENOMES, 2))  # all pairwise comparisons fwd and reverse
+
+# Rule `all` defines all A vs B comparisons, the `nucmer` rule runs a
+# single pairwise comparison at a time
+# The `zip` argument to `expand()` prevents this function generating the
+# product of every member of each list. Instead we have extracted each
+# participant in all pairwise comparisons into separate lists
+rule all:
+    input:
+        expand(
+            "results/{genomeA}_vs_{genomeB}.delta",
+            zip,
+            genomeA=[_[0] for _ in CMPS],
+            genomeB=[_[1] for _ in CMPS],
+            # outdir=OUTDIR,
+        ),
+
+
+# The nucmer rule runs nucmer in the forward direction only
+rule nucmer:
+    output:
+        "{outdir}/{genomeA}_vs_{genomeB}.delta",
+    run:
+        shell(
+            "nucmer data/{wildcards.genomeA}.fna data/{wildcards.genomeB}.fna "
+            "-p {wildcards.outdir}/{wildcards.genomeA}_vs_{wildcards.genomeB} "
+            "--maxmatch"
+        )
+```
+
+This example will take all the `.fna` files in the `data` subdirectory and generate all the pairwise combinations (forward and reverse) for comparison. Running the snakefile with `snakemake --snakefile example.sml --cores all` runs these pairwise comparisons and puts the output in the `results` subdirectory.
+
+## Programmatic workflows with `snakemake`
+
+As `snakemake` is written in Python and exposes its internals with an API, we can control workflows programmatically. In the `example.py` file, we use the API to specify target output files for the `example.smk` workflow, giving us control over which comparisons are run.
+
+::: { .callout-important }
+This ability will be important for us, as we will be using a database backend to avoid the need to rerun comparisons for which we already have data. So our actual workflow will be something like:
+
+- parse input data directory
+- filter the input data against the databse to identify only comparisons that have not been run before
+- pass the expected output files to `snakemake` so that snakemake handles the job distribution
+:::
+
+```python
+# Example file calling snakemake scheduler from Python
+
+from pathlib import Path
+from snakemake.api import SnakemakeApi, _get_executor_plugin_registry
+from snakemake.settings import ConfigSettings, DAGSettings, ResourceSettings
+
+# In a real situation, we can choose a snakefile to suit the analysis
+snakefile = Path("example.smk")
+
+# Define arguments to pass to the snakefile
+# config_args = {"outdir": "script_results"}
+
+# Define a subset of target files to generate
+target_files = ["script_results/genome_2_vs_genome_3.delta",
+                "script_results/genome_4_vs_genome_3.delta"]
+
+# Use the defined workflow from the Python API
+with SnakemakeApi() as snakemake_api:
+    workflow_api = snakemake_api.workflow(snakefile=snakefile,
+                                          resource_settings=ResourceSettings(cores=8),
+                                          config_settings=ConfigSettings(
+                                              config=config_args,
+                                              )
+                                          )
+    dag_api = workflow_api.dag(
+        dag_settings = DAGSettings(
+            targets=target_files,  
+        )
+    )
+    dag_api.execute_workflow()
+
+```
+
+::: { .callout-warning }
+The `snakemake` API is not documented in a detailed way. The best resource is to start at the actual CLI code for `snakemake`, linked below.
+
+- [API example - CLI code for snakemake](https://github.com/snakemake/snakemake/blob/04ec2c0262b2cb96cbcd7edbbb2596979c1703ae/snakemake/cli.py#L1767)
+:::
