@@ -40,10 +40,8 @@
 Run from the corresponding example directory with pytest -v
 """
 
-import pytest
-
 from pathlib import Path
-from typing import List, NamedTuple, Tuple
+from typing import NamedTuple, Tuple
 
 
 class DeltaParsed(NamedTuple):
@@ -51,3 +49,8 @@ class DeltaParsed(NamedTuple):
 
     filename: Path
     data: Tuple[int]
+
+
+def test_deltafile_parsing(deltafile_parsed):
+    """Check parsing of test NUCmer .delta/.filter file."""
+    result = anim.parse_delta(deltafile_parsed.filename)

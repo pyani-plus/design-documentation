@@ -141,7 +141,7 @@ def parse_deltafile(filename: Path) -> Tuple[int, int, int, int]:
     return qaln_length, raln_length, tot_aln_length, sim_errors
 
 
-def intervalparse_deltafile(filename: Path) -> Tuple[int, int, int]:
+def intervalparse_deltafile(filename: Path) -> Tuple[int, int, int, int]:
     """Return (alignment length, similarity errors) tuple from passed .delta.
 
     :param filename:  Path, path to the input .delta file
@@ -197,6 +197,8 @@ def intervalparse_deltafile(filename: Path) -> Tuple[int, int, int]:
         # corresponding interval and populate the corresponding dictionary with them
         if len(line) == 7:
             in_aln = True
+            logger.debug("Match data: %s" % line)
+
             regions_ref[current_ref].append(
                 tuple(sorted([int(line[0]), int(line[1])]))
             )  # aligned regions reference
