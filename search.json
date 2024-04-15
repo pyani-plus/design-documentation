@@ -258,13 +258,57 @@
     ]
   },
   {
+    "objectID": "snakemake.html",
+    "href": "snakemake.html",
+    "title": "7  snakemake usage",
+    "section": "",
+    "text": "7.1 Advantages of snakemake",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>`snakemake` usage</span>"
+    ]
+  },
+  {
+    "objectID": "snakemake.html#advantages-of-snakemake",
+    "href": "snakemake.html#advantages-of-snakemake",
+    "title": "7  snakemake usage",
+    "section": "",
+    "text": "7.1.1 Snakemake is well-maintained, and widely-used\n\nsnakemake documentation\n\n\n\n7.1.2 Snakemake distributes jobs\nA major hassle with the older versions of pyani was keeping on top of cluster scheduler changes. snakemake has plugins for cluster and cloud operation, so it should be possible for us to ride on top of that and maintain a single interface to snakemake to handle our job dependencies and distribution.\n\nCluster/cloud execution documentation\nSLURM executor plugin documentation",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>`snakemake` usage</span>"
+    ]
+  },
+  {
+    "objectID": "snakemake.html#using-the-snakemake-cli",
+    "href": "snakemake.html#using-the-snakemake-cli",
+    "title": "7  snakemake usage",
+    "section": "7.2 Using the snakemake CLI",
+    "text": "7.2 Using the snakemake CLI\nWith the CLI we call snakemake and pass it the path to the snakefile (which defines and configures the workflow), the number of cores, and any other arguments. The snakefile An example is given below.\n# Example snakemake file performing pairwise comparisons\nfrom itertools import permutations\n\n# Pick up genome filestems\n(GENOMES,) = glob_wildcards(\"data/{genome}.fna\")\nCMPS = list(permutations(GENOMES, 2))  # all pairwise comparisons fwd and reverse\n\n# Rule `all` defines all A vs B comparisons, the `nucmer` rule runs a\n# single pairwise comparison at a time\n# The `zip` argument to `expand()` prevents this function generating the\n# product of every member of each list. Instead we have extracted each\n# participant in all pairwise comparisons into separate lists\nrule all:\n    input:\n        expand(\n            \"results/{genomeA}_vs_{genomeB}.delta\",\n            zip,\n            genomeA=[_[0] for _ in CMPS],\n            genomeB=[_[1] for _ in CMPS],\n            # outdir=OUTDIR,\n        ),\n\n\n# The nucmer rule runs nucmer in the forward direction only\nrule nucmer:\n    output:\n        \"{outdir}/{genomeA}_vs_{genomeB}.delta\",\n    run:\n        shell(\n            \"nucmer data/{wildcards.genomeA}.fna data/{wildcards.genomeB}.fna \"\n            \"-p {wildcards.outdir}/{wildcards.genomeA}_vs_{wildcards.genomeB} \"\n            \"--maxmatch\"\n        )\nThis example will take all the .fna files in the data subdirectory and generate all the pairwise combinations (forward and reverse) for comparison. Running the snakefile with snakemake --snakefile example.sml --cores all runs these pairwise comparisons and puts the output in the results subdirectory.",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>`snakemake` usage</span>"
+    ]
+  },
+  {
+    "objectID": "snakemake.html#programmatic-workflows-with-snakemake",
+    "href": "snakemake.html#programmatic-workflows-with-snakemake",
+    "title": "7  snakemake usage",
+    "section": "7.3 Programmatic workflows with snakemake",
+    "text": "7.3 Programmatic workflows with snakemake\nAs snakemake is written in Python and exposes its internals with an API, we can control workflows programmatically. In the example.py file, we use the API to specify target output files for the example.smk workflow, giving us control over which comparisons are run.\n\n\n\n\n\n\nImportant\n\n\n\nThis ability will be important for us, as we will be using a database backend to avoid the need to rerun comparisons for which we already have data. So our actual workflow will be something like:\n\nparse input data directory\nfilter the input data against the databse to identify only comparisons that have not been run before\npass the expected output files to snakemake so that snakemake handles the job distribution\n\n\n\n# Example file calling snakemake scheduler from Python\n\nfrom pathlib import Path\nfrom snakemake.api import SnakemakeApi, _get_executor_plugin_registry\nfrom snakemake.settings import ConfigSettings, DAGSettings, ResourceSettings\n\n# In a real situation, we can choose a snakefile to suit the analysis\nsnakefile = Path(\"example.smk\")\n\n# Define arguments to pass to the snakefile\n# config_args = {\"outdir\": \"script_results\"}\n\n# Define a subset of target files to generate\ntarget_files = [\"script_results/genome_2_vs_genome_3.delta\",\n                \"script_results/genome_4_vs_genome_3.delta\"]\n\n# Use the defined workflow from the Python API\nwith SnakemakeApi() as snakemake_api:\n    workflow_api = snakemake_api.workflow(snakefile=snakefile,\n                                          resource_settings=ResourceSettings(cores=8),\n                                          config_settings=ConfigSettings(\n                                              config=config_args,\n                                              )\n                                          )\n    dag_api = workflow_api.dag(\n        dag_settings = DAGSettings(\n            targets=target_files,  \n        )\n    )\n    dag_api.execute_workflow()\n\n\n\n\n\n\nWarning\n\n\n\nThe snakemake API is not documented in a detailed way. The best resource is to start at the actual CLI code for snakemake, linked below.\n\nAPI example - CLI code for snakemake",
+    "crumbs": [
+      "ANIm",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>`snakemake` usage</span>"
+    ]
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "7  Summary",
+    "title": "8  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
   {

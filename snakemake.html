@@ -8,7 +8,7 @@
 
 <meta name="author" content="Leighton Pritchard">
 
-<title>pyani-plus Design Documentation - 3&nbsp; Recording Contributions</title>
+<title>pyani-plus Design Documentation - 7&nbsp; snakemake usage</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./part-jobs.html" rel="next">
-<link href="./contributing.html" rel="prev">
+<link href="./summary.html" rel="next">
+<link href="./deltafiles.html" rel="prev">
 <link href="./icon_32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -83,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-dev.html">Development</a></li><li class="breadcrumb-item"><a href="./recording-contributions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recording Contributions</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./snakemake.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -145,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./recording-contributions.html" class="sidebar-item-text sidebar-link active">
+  <a href="./recording-contributions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recording Contributions</span></span></a>
   </div>
 </li>
@@ -191,7 +225,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./snakemake.html" class="sidebar-item-text sidebar-link">
+  <a href="./snakemake.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></span></a>
   </div>
 </li>
@@ -225,20 +259,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#using-all-contributors" id="toc-using-all-contributors" class="nav-link active" data-scroll-target="#using-all-contributors"><span class="header-section-number">3.1</span> Using All Contributors</a>
+  <li><a href="#advantages-of-snakemake" id="toc-advantages-of-snakemake" class="nav-link active" data-scroll-target="#advantages-of-snakemake"><span class="header-section-number">7.1</span> Advantages of <code>snakemake</code></a>
   <ul class="collapse">
-  <li><a href="#currently-monitored-repositories" id="toc-currently-monitored-repositories" class="nav-link" data-scroll-target="#currently-monitored-repositories"><span class="header-section-number">3.1.1</span> Currently-monitored repositories</a></li>
+  <li><a href="#snakemake-is-well-maintained-and-widely-used" id="toc-snakemake-is-well-maintained-and-widely-used" class="nav-link" data-scroll-target="#snakemake-is-well-maintained-and-widely-used"><span class="header-section-number">7.1.1</span> Snakemake is well-maintained, and widely-used</a></li>
+  <li><a href="#snakemake-distributes-jobs" id="toc-snakemake-distributes-jobs" class="nav-link" data-scroll-target="#snakemake-distributes-jobs"><span class="header-section-number">7.1.2</span> Snakemake distributes jobs</a></li>
   </ul></li>
-  <li><a href="#which-files-are-modified-or-related-to-all-contributors" id="toc-which-files-are-modified-or-related-to-all-contributors" class="nav-link" data-scroll-target="#which-files-are-modified-or-related-to-all-contributors"><span class="header-section-number">3.2</span> Which files are modified, or related to <code>@all-contributors</code>?</a></li>
+  <li><a href="#using-the-snakemake-cli" id="toc-using-the-snakemake-cli" class="nav-link" data-scroll-target="#using-the-snakemake-cli"><span class="header-section-number">7.2</span> Using the <code>snakemake</code> CLI</a></li>
+  <li><a href="#programmatic-workflows-with-snakemake" id="toc-programmatic-workflows-with-snakemake" class="nav-link" data-scroll-target="#programmatic-workflows-with-snakemake"><span class="header-section-number">7.3</span> Programmatic workflows with <code>snakemake</code></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/recording-contributions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/snakemake.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-dev.html">Development</a></li><li class="breadcrumb-item"><a href="./recording-contributions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recording Contributions</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./snakemake.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Recording Contributions</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></h1>
 </div>
 
 
@@ -255,49 +291,127 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>We aim to record all contributions to <code>pyani-pure</code> in line with the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind are welcome!</p>
-<section id="using-all-contributors" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="using-all-contributors"><span class="header-section-number">3.1</span> Using All Contributors</h2>
-<p>The All Contributors bot monitors GitHub issues and pull requests for specially constructed phrases containing the command <code>@all-contributors add</code>, with text that describes the nature of the contribution. For example, creating a new GitHub issue with the text:</p>
-<pre class="text"><code>@all-contributors please add @widdowquinn for code and infrastructure</code></pre>
-<p>should prompt the <code>@all-contributors</code> bot to modify files in the repository and record the requested information.</p>
-<p>Please see <a href="https://allcontributors.org/docs/en/bot/usage">this link</a> for more information about command structure, and <a href="https://allcontributors.org/docs/en/emoji-key">this link</a> for a description of contribution types and the corresponding emojis.</p>
-<section id="currently-monitored-repositories" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="currently-monitored-repositories"><span class="header-section-number">3.1.1</span> Currently-monitored repositories</h3>
+<p>This chapter describes how we can use <code>snakemake</code> to make scheduling comparison jobs easier to handle than writing/maintaining our own scheduler(s).</p>
+<section id="advantages-of-snakemake" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="advantages-of-snakemake"><span class="header-section-number">7.1</span> Advantages of <code>snakemake</code></h2>
+<section id="snakemake-is-well-maintained-and-widely-used" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="snakemake-is-well-maintained-and-widely-used"><span class="header-section-number">7.1.1</span> Snakemake is well-maintained, and widely-used</h3>
 <ul>
-<li><code>design-documentation</code></li>
+<li><a href="https://snakemake.readthedocs.io/en/stable/">snakemake documentation</a></li>
+</ul>
+</section>
+<section id="snakemake-distributes-jobs" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="snakemake-distributes-jobs"><span class="header-section-number">7.1.2</span> Snakemake distributes jobs</h3>
+<p>A major hassle with the older versions of <code>pyani</code> was keeping on top of cluster scheduler changes. <code>snakemake</code> has plugins for cluster and cloud operation, so it should be possible for us to ride on top of that and maintain a single interface to <code>snakemake</code> to handle our job dependencies and distribution.</p>
+<ul>
+<li><a href="https://snakemake.readthedocs.io/en/stable/tutorial/additional_features.html#cluster-or-cloud-execution">Cluster/cloud execution documentation</a></li>
+<li><a href="https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/slurm.html">SLURM executor plugin documentation</a></li>
 </ul>
 </section>
 </section>
-<section id="which-files-are-modified-or-related-to-all-contributors" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="which-files-are-modified-or-related-to-all-contributors"><span class="header-section-number">3.2</span> Which files are modified, or related to <code>@all-contributors</code>?</h2>
-<p>Contributions are recorded in two files: <code>README.md</code> and <code>CONTRIBUTORS.md</code>. These are automagically updated by the bot, and there are protected areas, fenced by the following directives:</p>
-<pre class="text"><code>&lt;!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section --&gt;
-&lt;!-- prettier-ignore-start --&gt;
-&lt;!-- markdownlint-disable --&gt;
-
-&lt;!-- markdownlint-restore --&gt;
-&lt;!-- prettier-ignore-end --&gt;
-
-&lt;!-- ALL-CONTRIBUTORS-LIST:END --&gt;
-</code></pre>
-<p>and</p>
-<pre class="text"><code>&lt;!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --&gt;
-
-&lt;!-- ALL-CONTRIBUTORS-BADGE:END --&gt;
-</code></pre>
-<p>The format of how <code>@all-contributors</code> populates these sections is controlled by the <code>.all-contributorsrc</code> file.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<section id="using-the-snakemake-cli" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="using-the-snakemake-cli"><span class="header-section-number">7.2</span> Using the <code>snakemake</code> CLI</h2>
+<p>With the CLI we call <code>snakemake</code> and pass it the path to the snakefile (which defines and configures the workflow), the number of cores, and any other arguments. The snakefile An example is given below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example snakemake file performing pairwise comparisons</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> permutations</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick up genome filestems</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>(GENOMES,) <span class="op">=</span> glob_wildcards(<span class="st">"data/</span><span class="sc">{genome}</span><span class="st">.fna"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>CMPS <span class="op">=</span> <span class="bu">list</span>(permutations(GENOMES, <span class="dv">2</span>))  <span class="co"># all pairwise comparisons fwd and reverse</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Rule `all` defines all A vs B comparisons, the `nucmer` rule runs a</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># single pairwise comparison at a time</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The `zip` argument to `expand()` prevents this function generating the</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># product of every member of each list. Instead we have extracted each</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># participant in all pairwise comparisons into separate lists</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>rule <span class="bu">all</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        expand(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"results/</span><span class="sc">{genomeA}</span><span class="st">_vs_</span><span class="sc">{genomeB}</span><span class="st">.delta"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">zip</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            genomeA<span class="op">=</span>[_[<span class="dv">0</span>] <span class="cf">for</span> _ <span class="kw">in</span> CMPS],</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            genomeB<span class="op">=</span>[_[<span class="dv">1</span>] <span class="cf">for</span> _ <span class="kw">in</span> CMPS],</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># outdir=OUTDIR,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># The nucmer rule runs nucmer in the forward direction only</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>rule nucmer:</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    output:</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">"{outdir}/{genomeA}_vs_{genomeB}.delta"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    run:</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        shell(</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">"nucmer data/</span><span class="sc">{wildcards.genomeA}</span><span class="st">.fna data/</span><span class="sc">{wildcards.genomeB}</span><span class="st">.fna "</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">"-p </span><span class="sc">{wildcards.outdir}</span><span class="st">/</span><span class="sc">{wildcards.genomeA}</span><span class="st">_vs_</span><span class="sc">{wildcards.genomeB}</span><span class="st"> "</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">"--maxmatch"</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This example will take all the <code>.fna</code> files in the <code>data</code> subdirectory and generate all the pairwise combinations (forward and reverse) for comparison. Running the snakefile with <code>snakemake --snakefile example.sml --cores all</code> runs these pairwise comparisons and puts the output in the <code>results</code> subdirectory.</p>
+</section>
+<section id="programmatic-workflows-with-snakemake" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="programmatic-workflows-with-snakemake"><span class="header-section-number">7.3</span> Programmatic workflows with <code>snakemake</code></h2>
+<p>As <code>snakemake</code> is written in Python and exposes its internals with an API, we can control workflows programmatically. In the <code>example.py</code> file, we use the API to specify target output files for the <code>example.smk</code> workflow, giving us control over which comparisons are run.</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When attempting to set up the bot, errors of type “trouble processing your request” were received. The issue was fixed by deleting the <code>.all-contributorsrc</code> file, as per <a href="https://github.com/all-contributors/app/issues/198">this issue</a>.</p>
+<p>This ability will be important for us, as we will be using a database backend to avoid the need to rerun comparisons for which we already have data. So our actual workflow will be something like:</p>
+<ul>
+<li>parse input data directory</li>
+<li>filter the input data against the databse to identify only comparisons that have not been run before</li>
+<li>pass the expected output files to <code>snakemake</code> so that snakemake handles the job distribution</li>
+</ul>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example file calling snakemake scheduler from Python</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> snakemake.api <span class="im">import</span> SnakemakeApi, _get_executor_plugin_registry</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> snakemake.settings <span class="im">import</span> ConfigSettings, DAGSettings, ResourceSettings</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;In a real situation, we can choose a snakefile to suit the analysis</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>snakefile <span class="op">=</span> Path(<span class="st">"example.smk"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Define arguments to pass to the snakefile</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># config_args = {"outdir": "script_results"}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a subset of target files to generate</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>target_files <span class="op">=</span> [<span class="st">"script_results/genome_2_vs_genome_3.delta"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">"script_results/genome_4_vs_genome_3.delta"</span>]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the defined workflow from the Python API</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> SnakemakeApi() <span class="im">as</span> snakemake_api:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    workflow_api <span class="op">=</span> snakemake_api.workflow(snakefile<span class="op">=</span>snakefile,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                                          resource_settings<span class="op">=</span>ResourceSettings(cores<span class="op">=</span><span class="dv">8</span>),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                                          config_settings<span class="op">=</span>ConfigSettings(</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                                              config<span class="op">=</span>config_args,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                                              )</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                                          )</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    dag_api <span class="op">=</span> workflow_api.dag(</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        dag_settings <span class="op">=</span> DAGSettings(</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            targets<span class="op">=</span>target_files,  </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    dag_api.execute_workflow()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>snakemake</code> API is not documented in a detailed way. The best resource is to start at the actual CLI code for <code>snakemake</code>, linked below.</p>
+<ul>
+<li><a href="https://github.com/snakemake/snakemake/blob/04ec2c0262b2cb96cbcd7edbbb2596979c1703ae/snakemake/cli.py#L1767">API example - CLI code for snakemake</a></li>
+</ul>
 </div>
 </div>
 
@@ -716,13 +830,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./contributing.html" class="pagination-link" aria-label="Contributing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Contributing</span></span>
+      <a href="./deltafiles.html" class="pagination-link" aria-label="`.delta` files">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./part-jobs.html" class="pagination-link" aria-label="Job Distribution">
-        <span class="nav-page-text">Job Distribution</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./summary.html" class="pagination-link" aria-label="Summary">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -734,7 +848,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/recording-contributions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/snakemake.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
