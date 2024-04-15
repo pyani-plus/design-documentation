@@ -2,10 +2,8 @@
 from itertools import permutations
 
 # Pick up genome filestems
-GENOMES, = glob_wildcards("data/{genome}.fna")
+(GENOMES,) = glob_wildcards("data/{genome}.fna")
 CMPS = list(permutations(GENOMES, 2))  # all pairwise comparisons fwd and reverse
-OUTDIR = config.get("outdir", "results")
-
 
 # Rule `all` defines all A vs B comparisons, the `nucmer` rule runs a
 # single pairwise comparison at a time
@@ -15,16 +13,19 @@ OUTDIR = config.get("outdir", "results")
 rule all:
     input:
         expand(
-            "{outdir}/{genomeA}_vs_{genomeB}.delta",
+            "results/{genomeA}_vs_{genomeB}.delta",
             zip,
             genomeA=[_[0] for _ in CMPS],
             genomeB=[_[1] for _ in CMPS],
-            outdir=OUTDIR,
-        )
+            # outdir=OUTDIR,
+        ),
+
 
 # The nucmer rule runs nucmer in the forward direction only
 rule nucmer:
     output:
-        "{outdir}/{genomeA}_vs_{genomeB}.delta"
+        "{outdir}/{genomeA}_vs_{genomeB}.delta",
     run:
-        shell("nucmer data/{wildcards.genomeA}.fna data/{wildcards.genomeB}.fna -p {wildcards.outdir}/{wildcards.genomeA}_vs_{wildcards.genomeB} --maxmatch")
+        shell(
+            "nucmer data/{wildcards.genomeA}.fna data/{wildcards.genomeB}.fna -p {wildcards.outdir}/{wildcards.genomeA}_vs_{wildcards.genomeB} --maxmatch"
+        )
