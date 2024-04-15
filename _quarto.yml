@@ -36,6 +36,7 @@ book:
       chapters:
       - anim-method.qmd
       - deltafiles.qmd
+      - snakemake.qmd
 #    - glossary.qmd
     - summary.qmd
     - resources.qmd

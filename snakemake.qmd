@@ -1,2 +1,16 @@
 # `snakemake` usage
 
+This chapter describes how we can use `snakemake` to make scheduling comparison jobs easier to handle than writing/maintaining our own scheduler(s).
+
+## Advantages of `snakemake`
+
+### Snakemake is well-maintained, and widely-used
+
+- [snakemake documentation](https://snakemake.readthedocs.io/en/stable/)
+
+### Snakemake distributes jobs
+
+- [Cluster/cloud execution documentation](https://snakemake.readthedocs.io/en/stable/tutorial/additional_features.html#cluster-or-cloud-execution)
+- [SLURM executor plugin documentation](https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/slurm.html)
+
+## Using `snakemake` with a
