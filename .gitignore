@@ -18,3 +18,8 @@ _freeze
 
 # Ignore Python-related files
 .mypy_cache
+
+# Ignore example output/unnecessary files
+examples/snakemake/.snakemake
+examples/snakemake/results
+examples/snakemake/script_results
