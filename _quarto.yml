@@ -32,6 +32,7 @@ book:
     - part: part-jobs.qmd
       chapters: 
       - sqlite.qmd
+      - schema.qmd
     - part: part-anim.qmd
       chapters:
       - anim-method.qmd
