@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Leighton Pritchard">
 
-<title>pyani-plus Design Documentation - 6&nbsp; .delta files</title>
+<title>7&nbsp; .delta files – `pyani-plus` Design Documentation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -143,13 +143,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./deltafiles.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./deltafiles.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -195,7 +195,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part-dev.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Development</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -218,7 +218,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part-jobs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Job Distribution</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -229,13 +229,19 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SQLite3</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schema.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Database schema</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part-anim.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ANIm</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -243,19 +249,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./anim-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The ANIm Methodology</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The ANIm Methodology</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./deltafiles.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./snakemake.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></span></a>
   </div>
 </li>
       </ul>
@@ -263,7 +269,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -288,17 +294,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#definition" id="toc-definition" class="nav-link active" data-scroll-target="#definition"><span class="header-section-number">6.1</span> Definition</a></li>
-  <li><a href="#sec-interpreting-alignments" id="toc-sec-interpreting-alignments" class="nav-link" data-scroll-target="#sec-interpreting-alignments"><span class="header-section-number">6.2</span> Interpreting alignments</a>
+  <li><a href="#definition" id="toc-definition" class="nav-link active" data-scroll-target="#definition"><span class="header-section-number">7.1</span> Definition</a></li>
+  <li><a href="#sec-interpreting-alignments" id="toc-sec-interpreting-alignments" class="nav-link" data-scroll-target="#sec-interpreting-alignments"><span class="header-section-number">7.2</span> Interpreting alignments</a>
   <ul class="collapse">
-  <li><a href="#percentage-identity" id="toc-percentage-identity" class="nav-link" data-scroll-target="#percentage-identity"><span class="header-section-number">6.2.1</span> Percentage identity</a></li>
-  <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage"><span class="header-section-number">6.2.2</span> Coverage</a></li>
+  <li><a href="#percentage-identity" id="toc-percentage-identity" class="nav-link" data-scroll-target="#percentage-identity"><span class="header-section-number">7.2.1</span> Percentage identity</a></li>
+  <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage"><span class="header-section-number">7.2.2</span> Coverage</a></li>
   </ul></li>
-  <li><a href="#overlapping-alignments" id="toc-overlapping-alignments" class="nav-link" data-scroll-target="#overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</a>
+  <li><a href="#overlapping-alignments" id="toc-overlapping-alignments" class="nav-link" data-scroll-target="#overlapping-alignments"><span class="header-section-number">7.3</span> Overlapping alignments</a>
   <ul class="collapse">
-  <li><a href="#a-.delta-file-with-overlaps" id="toc-a-.delta-file-with-overlaps" class="nav-link" data-scroll-target="#a-.delta-file-with-overlaps"><span class="header-section-number">6.3.1</span> A <code>.delta</code> file with overlaps</a></li>
-  <li><a href="#dnadiff.pls-alignedbases-count" id="toc-dnadiff.pls-alignedbases-count" class="nav-link" data-scroll-target="#dnadiff.pls-alignedbases-count"><span class="header-section-number">6.3.2</span> <code>dnadiff.pl</code>’s <code>AlignedBases</code> count</a></li>
-  <li><a href="#a-second-example" id="toc-a-second-example" class="nav-link" data-scroll-target="#a-second-example"><span class="header-section-number">6.3.3</span> A second example</a></li>
+  <li><a href="#a-.delta-file-with-overlaps" id="toc-a-.delta-file-with-overlaps" class="nav-link" data-scroll-target="#a-.delta-file-with-overlaps"><span class="header-section-number">7.3.1</span> A <code>.delta</code> file with overlaps</a></li>
+  <li><a href="#dnadiff.pls-alignedbases-count" id="toc-dnadiff.pls-alignedbases-count" class="nav-link" data-scroll-target="#dnadiff.pls-alignedbases-count"><span class="header-section-number">7.3.2</span> <code>dnadiff.pl</code>’s <code>AlignedBases</code> count</a></li>
+  <li><a href="#a-second-example" id="toc-a-second-example" class="nav-link" data-scroll-target="#a-second-example"><span class="header-section-number">7.3.3</span> A second example</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="github.com/organizations/pyani-plus/design-documentation/edit/main/deltafiles.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="github.com/organizations/pyani-plus/design-documentation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -306,9 +312,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./deltafiles.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part-anim.html">ANIm</a></li><li class="breadcrumb-item"><a href="./deltafiles.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>.delta</code> files</span></h1>
 </div>
 
 
@@ -326,8 +332,8 @@ window.Quarto = {
 
 
 <p>This chapter describes how we interpret MUMmer’s main output file, the <code>.delta</code> format file, in order to calculate key measures of sequence similarity: <strong>sequence identity</strong> and <strong>genome coverage</strong>.</p>
-<section id="definition" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">6.1</span> Definition</h2>
+<section id="definition" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">7.1</span> Definition</h2>
 <p><code>.delta</code> file format is defined in the <a href="https://mummer.sourceforge.net/manual/#nucmeroutput">MUMmer3 manual</a> (see below).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -383,8 +389,8 @@ PROMER
 </div>
 </div>
 </section>
-<section id="sec-interpreting-alignments" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sec-interpreting-alignments"><span class="header-section-number">6.2</span> Interpreting alignments</h2>
+<section id="sec-interpreting-alignments" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sec-interpreting-alignments"><span class="header-section-number">7.2</span> Interpreting alignments</h2>
 <p>In the MUMmer documentation (see callout box above), an example alignment is presented:</p>
 <pre class="text"><code>A = ATCGACTGCAC$
 B = TCCGACGCAC$
@@ -442,8 +448,8 @@ Important
 </ul></li>
 </ul>
 <p>From this alignment we can calculate the coverage for the query and the reference sequence, and the percentage identity for the match.</p>
-<section id="percentage-identity" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="percentage-identity"><span class="header-section-number">6.2.1</span> Percentage identity</h3>
+<section id="percentage-identity" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="percentage-identity"><span class="header-section-number">7.2.1</span> Percentage identity</h3>
 <p>The percentage identity of the match is the fraction of aligned, matching bases in the alignment. Inspection of the alignment above tells us that this is 9/12 = 0.75. This value can also be calculated from the total alignment length and the number of similarity errors (mismatches plus gaps).</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Percentage identity calculation">
 <div class="callout-header d-flex align-content-center">
@@ -459,8 +465,8 @@ Percentage identity calculation
 </div>
 </div>
 </section>
-<section id="coverage" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="coverage"><span class="header-section-number">6.2.2</span> Coverage</h3>
+<section id="coverage" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="coverage"><span class="header-section-number">7.2.2</span> Coverage</h3>
 <p>Coverage is calculated separately for the two aligned sequences. <strong>Query coverage</strong> is the proportion of bases in the query that are aligned to a base in the reference sequence. <strong>Reference coverage</strong> is the proportion of bases in the reference that are aligned to a base in the query sequence.</p>
 <p>The number of aligned bases is the same for both sequences. In the alignment above it is 12 - 3 = 9, the total alignment length minus the total indel count. But the lengths of the sequences differ, as do the number of so the coverages are:</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Percentage identity calculation">
@@ -479,9 +485,9 @@ Percentage identity calculation
 <p>Which here gives us a <strong>reference coverage</strong> of 9/11 ≈ 0.82, and a <strong>query coverage</strong> of 9/12 = 0.75.</p>
 </section>
 </section>
-<section id="overlapping-alignments" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="overlapping-alignments"><span class="header-section-number">6.3</span> Overlapping alignments</h2>
-<p>The approach in <a href="#sec-interpreting-alignments" class="quarto-xref"><span>Section 6.2</span></a> works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.</p>
+<section id="overlapping-alignments" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="overlapping-alignments"><span class="header-section-number">7.3</span> Overlapping alignments</h2>
+<p>The approach in <a href="#sec-interpreting-alignments" class="quarto-xref"><span>Section 7.2</span></a> works for simple cases, but in real genome comparisons we may end up with repeat regions, and overlapping alignments. There are many ways to handle and calculate values like sequence identity and coverage from this kind of data, and we need to make an algorithmic choice.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -495,8 +501,8 @@ Important
 <p>This problem arose in an <a href="https://github.com/widdowquinn/pyani/issues/340">issue raised for an earlier <code>pyani</code> version</a>. Here, Donovan Parks noted that <code>pyani</code> was returning a genome coverage value of greater than unity. This should not have happened, and the methodology described here is intended to avoid a recurrence.</p>
 </div>
 </div>
-<section id="a-.delta-file-with-overlaps" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="a-.delta-file-with-overlaps"><span class="header-section-number">6.3.1</span> A <code>.delta</code> file with overlaps</h3>
+<section id="a-.delta-file-with-overlaps" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="a-.delta-file-with-overlaps"><span class="header-section-number">7.3.1</span> A <code>.delta</code> file with overlaps</h3>
 <p>The callout box below contains a MUMMer output <code>.delta</code> file, which results from a comparison between two virus sequences. There is a repeat in the genome which results in overlapping alignments, and previously gave a genome coverage of greater than unity.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
@@ -582,8 +588,8 @@ AvgIdentity                    99.94                99.94</code></pre>
 </ul>
 <p>This is in conflict with the <code>dnadiff.pl</code> output - the total alignment length doesn’t seem to match. So where does <code>dnadiff.pl</code> get its <code>AlignedBases</code> count from?</p>
 </section>
-<section id="dnadiff.pls-alignedbases-count" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="dnadiff.pls-alignedbases-count"><span class="header-section-number">6.3.2</span> <code>dnadiff.pl</code>’s <code>AlignedBases</code> count</h3>
+<section id="dnadiff.pls-alignedbases-count" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="dnadiff.pls-alignedbases-count"><span class="header-section-number">7.3.2</span> <code>dnadiff.pl</code>’s <code>AlignedBases</code> count</h3>
 <p>MUMmer’s <code>dnadiff.pl</code> script effectively implements a workflow of several MUMmer tools:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">$NUCMER</span> <span class="at">--maxmatch</span> <span class="at">-p</span> <span class="va">$OPT_Prefix</span> <span class="va">$OPT_RefFile</span> <span class="va">$OPT_QryFile</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">$DELTA_FILTER</span> <span class="at">-1</span> <span class="va">$OPT_DeltaFile</span> <span class="op">&gt;</span> <span class="va">$OPT_DeltaFile1</span></span>
@@ -645,8 +651,8 @@ MGV_MGV-GENOME-0357962  GAP 24177   24106   -70 -118    48</code></pre>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>So, for the <code>.rdiff</code> file above, all elements in column 4 are negative, and no modification would occur.</p>
 </section>
-<section id="a-second-example" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="a-second-example"><span class="header-section-number">6.3.3</span> A second example</h3>
+<section id="a-second-example" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="a-second-example"><span class="header-section-number">7.3.3</span> A second example</h3>
 <p>In this example, there is an 84bp unaligned region at the start of the reference, and about a 2kb overlap between the two aligned regions.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
@@ -874,18 +880,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -917,7 +912,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -925,7 +942,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1251,12 +1268,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./anim-method.html" class="pagination-link" aria-label="The ANIm Methodology">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The ANIm Methodology</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The ANIm Methodology</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./snakemake.html" class="pagination-link" aria-label="`snakemake` usage">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><code>snakemake</code> usage</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
