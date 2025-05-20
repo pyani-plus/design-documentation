@@ -33,3 +33,19 @@ populate_db dbpath output.tab  # populate sqlite database with data from the out
 ## Test implementation
 
 A test implementation is available under `examples/sqlite/concurrency`.
+
+## Initial implementation (workers write to SQLite3 on networked drive)
+
+Prior to v0.0.1 (specifically [pull request #327](https://github.com/pyani-plus/pyani-plus/pull/327), each worker thread would periodically commit a batch of completed comparisons directly to the SQLite3 database. We made some effort with batch sizes and retries to mitigate contention.
+
+This worked and scaled well on a single machine with the SQLite3 database on a local drive (e.g. on our 40 core Linux server). It also worked reasonably well on SLURM clusters with a low number of workers.
+
+However, when the number of workers was increased and/or the cluster network or file server was under load, a high proportion of the worker jobs would finish their computation but were unable to log the results to the database. After three attempts with increasing waits inbetween, the job ended in failure.
+
+## First release (workers write to JSON on networked drive)
+
+As of v0.0.1 (specifically [pull request #327](https://github.com/pyani-plus/pyani-plus/pull/327), each worker thread would periodically refresh a JSON file of all its completed comparisons to a networked drive. The main application (public CLI) monitors this folder for new or updated JSON files, which are parsed and imported into the SQLite3 database (ignoring pre-existing entries).
+
+Note that the SQLite3 database is still on a networked drive. The worker jobs need to connect to it to determine what they are required to compute and the parameters etc. However with only one thread writing to the database the contention seems to be solved.
+
+This was tested on the ARCHIE-WeSt cluster with 400 workers (account limit), and the Crop Diversity HPC with a little over 1000 workers.
